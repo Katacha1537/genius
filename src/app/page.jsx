@@ -171,6 +171,7 @@ function App() {
   return (
     <div className="flex h-screen bg-[#0B060F]">
       <Analytics />
+      <SpeedInsights />
       {/* Metade da tela vazia */}
       <div className='hidden md:block md:w-1/2 h-full w-[50%] bg-gradient-to-t from-[#7d40f85b] via-[#E741E7] to-[#7d40f85b] pr-[2px]'>
         <div className="bg-[url('/assets/BG.webp')] bg-cover bg-center h-full">
