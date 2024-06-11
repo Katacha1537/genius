@@ -6,7 +6,8 @@ const Avatar = ({ name }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const router = useRouter();
 
-    const email = localStorage.getItem('email') || '';
+    // Verificar se estamos no navegador antes de acessar localStorage
+    const email = typeof window !== 'undefined' ? localStorage.getItem('email') || '' : '';
 
     const getColor = (letter) => {
         const charCode = letter.toUpperCase().charCodeAt(0) - 64;
