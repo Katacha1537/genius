@@ -1,7 +1,7 @@
 'use client'
-import Header from "../components/Header";
-import SectionMentoria from "../components/SectionMentoria";
-import CorouselMentoria from "../components/CorouselMentoria";
+import Header from "../../components/Header";
+import SectionMentoria from "../../components/SectionMentoria";
+import CorouselMentoria from "../../components/CorouselMentoria";
 
 export default function Home() {
     return (

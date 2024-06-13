@@ -16,3 +16,22 @@
 .bg-custom-gradient {
     background: linear-gradient(to right, #4300c83f 5%, #0B060F 15%, #0B060F 85%, #4300c83f 95%);
 }
+
+.slider-container {
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 16px;
+    /* Adiciona um padding para evitar que saia da tela */
+    box-sizing: border-box;
+    /* Inclui o padding no cálculo da largura */
+}
+
+.slick-slide>div {
+    margin: 0 8px;
+    /* Adiciona um espaço entre os slides */
+}
+
+.slick-list {
+    overflow: hidden;
+    /* Garante que nada saia do contêiner */
+}

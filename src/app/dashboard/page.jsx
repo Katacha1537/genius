@@ -1,12 +1,15 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import Carousel from "../components/Carousel";
-import Header from "../components/Header";
-import Section from "../components/Section";
+import Header from "../../components/Header";
+import Section from "../../components/Section";
 import { useEffect, useState } from "react";
+import Sidebar from "@/components/Sidebar";
 
-
+import './page.css'
+import CriadorProdutosEcom from "@/components/criadorProdutosEcom copy";
+import Carousel from "@/components/Carousel";
+import Link from "next/link";
 
 const Dashboard = () => {
 
@@ -65,19 +68,74 @@ const Dashboard = () => {
         };
     }, [navigate])
 
-    if (!isClient) return <h1 className='bg-[#0B060F] w-screen h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>;
+    const items = [
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.png" />
+    ]
 
-    return (
-        <div className="bg-[#0B060F] h-screen flex flex-col pb-10 sm:pb-0">
-            <Header />
-            <div className="flex-grow sm:bg-custom-gradient">
-                <main className="p-12 pt-2 pb-2 flex flex-col justify-end h-full">
-                    <Section />
-                    <Carousel />
-                </main>
-            </div>
-        </div>
-    );
+    const itemsGeradores = [
+        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.png" />
+    ]
+    const itemsMentoria = [
+        <div>
+            <Link href="/mentoria">
+                <div className="mt-2 mr-4 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/mentoriaEcom.png')] bg-cover h-[600px] md:h-[400px] w-[350px]" />
+            </Link>
+        </div>,
+        <div>
+            <Link href="/experts">
+                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/expertEcom.png')] bg-cover h-[600px] md:h-[400px] w-[350px]" />
+            </Link>
+        </div>,
+    ]
+
+
+
+    return !isClient
+        ?
+        <h1 className='bg-[#0B060F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>
+        :
+        (
+            <div className="bg-[#0B060F] flex h-screen pb-10 sm:pb-0 container-overflow">
+                <Sidebar />
+
+                <div className="w-full ml-0 md:ml-[19%]">
+                    <Header />
+                    <div className="p-6 pt-4 pb-2">
+                        <Section />
+                        <CriadorProdutosEcom />
+                        <Carousel items={itemsMentoria} title="Mentoria Ecom" />
+                        <Carousel items={items} title="Scripts (Em Breve)" />
+                        <Carousel items={itemsGeradores} title="Geradores (Em Breve)" />
+                    </div>
+                </div>
+            </div >
+        );
 };
 
 export default Dashboard;
+
+const InactiveCard = ({ imageUrl }) => {
+    return (
+        <div className="relative mt-2 rounded-xl mb-2 mr-4 h-[600px] md:h-[400px] w-[350px] bg-cover bg-center" style={{ backgroundImage: `url(${imageUrl})` }}>
+            <div className="absolute inset-0 bg-[#000] opacity-60 rounded-xl"></div> {/* Camada semi-transparente */}
+            <div className="absolute top-3 right-4 bg-purple-600 text-white text-xs px-4 py-2 rounded-full z-10 opacity-100">
+                Em breve
+            </div>
+            <div className="absolute inset-0 rounded-xl pointer-events-none" style={{
+                boxShadow: 'inset 0 0 15px 5px rgba(128, 90, 213, 0.5)'
+            }}></div> {/* Sombra interna */}
+        </div>
+    );
+}

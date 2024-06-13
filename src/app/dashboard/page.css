@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@500&family=Rubik&display=swap');
+
+.container-overflow {
+    overflow-x: hidden;
+}
+
+.titleForm {
+    font-family: "Oxanium", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 501;
+    font-style: normal;
+}

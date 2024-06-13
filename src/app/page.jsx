@@ -1,28 +1,26 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { airtableAPI } from './service/airtableAPI';
+import { airtableAPI } from '../service/airtableAPI';
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-
 import './page.css';
 import { useRouter } from 'next/navigation';
+import { useDocument } from '../hooks/useDocument';
+import { db } from '../firebase/config';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 function App() {
-  const navigate = useRouter()
-
-
+  const navigate = useRouter();
   // Estado para armazenar o valor do campo de e-mail
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   // Estado para armazenar a mensagem de erro
   const [errorMessage, setErrorMessage] = useState('');
-
-  const [isClient, setIsClient] = useState(false)
-
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true)
+    setIsClient(true);
     const handleRightClick = event => {
       event.preventDefault();
       return false;  // Adiciona return false para tentar reforçar o bloqueio.
@@ -42,8 +40,8 @@ function App() {
     const detectDevToolsOpen = () => {
       const threshold = 160; // Defina um limiar de altura ou largura que você considera indicativo de DevTools abertas
       if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
-        localStorage.removeItem('expiryDate')
-        localStorage.removeItem('email')
+        localStorage.removeItem('expiryDate');
+        localStorage.removeItem('email');
       }
     };
 
@@ -66,8 +64,8 @@ function App() {
         navigate.push('/dashboard');
       }
     }
-
   }, []);
+
   // Função para lidar com a alteração no campo de e-mail
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -94,6 +92,30 @@ function App() {
     }
   };
 
+  const fetchFirebaseUser = async (email) => {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', email));
+      if (userDoc.exists()) {
+        return userDoc.data();
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro ao buscar o usuário no Firebase:', error);
+      return null;
+    }
+  };
+
+  const createFirebaseUser = async (email) => {
+    try {
+      await setDoc(doc(db, 'users', email), { email });
+      return true;
+    } catch (error) {
+      console.error('Erro ao criar usuário no Firebase:', error);
+      return false;
+    }
+  };
+
   // Função para lidar com o envio do formulário
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -101,67 +123,78 @@ function App() {
       setErrorMessage('Por favor, insira seu email.');
       return;
     }
-    setIsLoading(true)
+    setIsLoading(true);
 
+    // Verifica se o email existe no Airtable
     const record = await fetchEmailRecord(email);
     if (!record) {
-      setErrorMessage('Email não encontrado.');
-      setIsLoading(false)
+      setErrorMessage('Email não encontrado no Airtable.');
+      setIsLoading(false);
       return;
     }
 
     // Verifica o status do registro encontrado
     const status = record.fields.Status;
     if (status === "Ativo" || status === "Ativa") {
-      console.log('Email digitado:', email);
+      // Verifica se o email existe no Firebase
+      const firebaseUser = await fetchFirebaseUser(email);
+      if (!firebaseUser) {
+        // Se não existir, cria um novo usuário no Firebase
+        const userCreated = await createFirebaseUser(email);
+        if (!userCreated) {
+          setErrorMessage('Erro ao criar usuário no Firebase.');
+          setIsLoading(false);
+          return;
+        }
+      }
 
+      console.log('Email digitado:', email);
       const expiryDate = new Date();
       expiryDate.setDate(expiryDate.getDate() + 15);
 
-      localStorage.setItem('expiryDate', expiryDate.toISOString())
-      localStorage.setItem('email', email)
-      setIsLoading(false)
+      localStorage.setItem('expiryDate', expiryDate.toISOString());
+      localStorage.setItem('email', email);
+      setIsLoading(false);
       navigate.push(`/dashboard`);
-    }
-    else if (status === "Cancelado" || status === "Cancelada") {
-      setIsLoading(false)
-      setErrorMessage(<span>
-        Conta cancelada, Entre em contato. {' '}
-        <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
-      </span>
+    } else if (status === "Cancelado" || status === "Cancelada") {
+      setIsLoading(false);
+      setErrorMessage(
+        <span>
+          Conta cancelada, Entre em contato. {' '}
+          <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
+        </span>
       );
-    }
-    else if (status === "Reembolsado" || status === "Reembolsada") {
-      setIsLoading(false)
+    } else if (status === "Reembolsado" || status === "Reembolsada") {
+      setIsLoading(false);
       setErrorMessage(
         <span>
           Conta Reembolsada, Entre em contato. {' '}
           <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
         </span>
       );
-    }
-    else if (status === "Estornado" || status === "Estornada") {
-      setIsLoading(false)
-      setErrorMessage(<span>
-        Conta Estornada, Entre em contato. {' '}
-        <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
-      </span>
+    } else if (status === "Estornado" || status === "Estornada") {
+      setIsLoading(false);
+      setErrorMessage(
+        <span>
+          Conta Estornada, Entre em contato. {' '}
+          <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
+        </span>
       );
-    }
-    else if (status === "Expirado" || status === "Expirada") {
-      setIsLoading(false)
-      setErrorMessage(<span>
-        Conta Expirada, Entre em contato. {' '}
-        <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
-      </span>
+    } else if (status === "Expirado" || status === "Expirada") {
+      setIsLoading(false);
+      setErrorMessage(
+        <span>
+          Conta Expirada, Entre em contato. {' '}
+          <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
+        </span>
       );
-    }
-    else {
-      setIsLoading(false)
-      setErrorMessage(<span>
-        Verifique sua conta ou entre em contato. {' '}
-        <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
-      </span>
+    } else {
+      setIsLoading(false);
+      setErrorMessage(
+        <span>
+          Verifique sua conta ou entre em contato. {' '}
+          <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
+        </span>
       );
     }
   };
@@ -172,6 +205,7 @@ function App() {
     <div className="flex h-screen bg-[#0B060F]">
       <Analytics />
       <SpeedInsights />
+      <WhatsAppButton />
       {/* Metade da tela vazia */}
       <div className='hidden md:block md:w-1/2 h-full w-[50%] bg-gradient-to-t from-[#7d40f85b] via-[#E741E7] to-[#7d40f85b] pr-[2px]'>
         <div className="bg-[url('/assets/BG.webp')] bg-cover bg-center h-full">
@@ -188,7 +222,6 @@ function App() {
 
             {/* Título */}
             <h2 className="titleForm text-xl md:text-2xl font-bold text-white mb-10">Faça seu login</h2>
-
             {/* Formulário de login */}
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
