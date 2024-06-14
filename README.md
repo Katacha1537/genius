@@ -1,4 +1,4 @@
-# Genius E-Commerce Platform
+# Genius Platform
 
 ![Genius Logo](https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg)
 
