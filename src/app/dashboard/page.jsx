@@ -69,15 +69,10 @@ const Dashboard = () => {
     }, [navigate])
 
     const items = [
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.webp" />
+        <InactiveCard imageUrl="/assets/scripts/chatecom.webp" />,
+        <InactiveCard imageUrl="/assets/scripts/zapecom.webp" />,
+        <InactiveCard imageUrl="/assets/scripts/vsl.webp" />,
+        <InactiveCard imageUrl="/assets/scripts/email.webp" />,
     ]
 
     const itemsGeradores = [
