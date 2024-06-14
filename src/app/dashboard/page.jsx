@@ -76,11 +76,15 @@ const Dashboard = () => {
     ]
 
     const itemsGeradores = [
-        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />
+        <InactiveCard imageUrl="/assets/geradores/quebra-objecao.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/beneficios.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/headline.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/faq.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/aida.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/pas.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/personas-faq.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/personas-por-nicho.webp" />,
+        <InactiveCard imageUrl="/assets/geradores/analogias.webp" />,
     ]
     const itemsMentoria = [
         <div>
@@ -108,7 +112,7 @@ const Dashboard = () => {
             <div className="bg-[#0B060F] flex h-screen pb-10 sm:pb-0 container-overflow">
                 <Sidebar />
 
-                <div className="w-full ml-0 md:ml-[19%]">
+                <div className="w-full ml-0 md:ml-[255px]">
                     <Header />
                     <div className="p-6 pt-4 pb-2">
                         <Section titleUm='CRIE EM UM' titleDois='PASSE DE MÁGICA' />

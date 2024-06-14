@@ -7,10 +7,15 @@ const Header = () => {
     const isSettings = pathname === '/dashboard/configuracoes';
     const isExperts = pathname === '/dashboard/experts';
     return (
-        <header className={`flex w-full justify-between items-center p-4 pr-4 md:pl-6 ${isDashboard ? 'md:pr-[21%]' : ''}  text-white`}>
-            <h2 className='font-bold text-xl'>{isDashboard ? 'Dashboard' : isSettings ? 'Configurações' : isExperts ? `Expert's` : 'Não encontrado'}</h2>
-            <Avatar name="felipe" />
+        <header className={`flex w-full justify-between items-center p-4 pr-4  ${isSettings ? ' ' : 'md:pr-[270px]'} 2xl:pr-40 3xl:pr-16 text-white`}>
+            <h2 className={`font-bold text-xl ${isDashboard ? 'text-left' : ''} ${isSettings ? 'text-center md:text-left' : ''} ${isExperts ? 'text-center md:text-left' : ''}`}>
+                {isDashboard ? 'Dashboard' : isSettings ? 'Configurações' : isExperts ? `Expert's` : 'Não encontrado'}
+            </h2>
+            <div className="flex-shrink-0">
+                <Avatar name="felipe" />
+            </div>
         </header>
+
     );
 };
 

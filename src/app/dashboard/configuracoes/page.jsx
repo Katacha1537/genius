@@ -20,8 +20,8 @@ const Configuracoes = () => {
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-    const [imageSrc, setImageSrc] = useState("");
-    const [loading, setLoading] = useState("");
+    const [imageSrc, setImageSrc] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const { setReRender } = useUserContext()
 
@@ -78,42 +78,55 @@ const Configuracoes = () => {
 
     useEffect(() => {
         if (email && !initialDataLoaded) {
-            // Carregar dados do Firestore
-            const loadUserData = async () => {
-                try {
-                    const docRef = doc(db, 'users', email);
-                    const docSnap = await getDoc(docRef);
+            const storedUserData = localStorage.getItem('userData');
 
-                    if (docSnap.exists()) {
-                        const userData = docSnap.data();
-                        setNome(userData.nome || '');
-                        setSobrenome(userData.sobrenome || '');
-                        setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+            if (storedUserData) {
+                const userData = JSON.parse(storedUserData);
+                setNome(userData.nome || '');
+                setSobrenome(userData.sobrenome || '');
+                setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                setInitialDataLoaded(true);
+            } else {
+                // Carregar dados do Firestore
+                const loadUserData = async () => {
+                    try {
+                        const docRef = doc(db, 'users', email);
+                        const docSnap = await getDoc(docRef);
+
+                        if (docSnap.exists()) {
+                            const userData = docSnap.data();
+                            setNome(userData.nome || '');
+                            setSobrenome(userData.sobrenome || '');
+                            setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                            localStorage.setItem('userData', JSON.stringify(userData));
+                        }
+                        setInitialDataLoaded(true);
+                    } catch (error) {
+                        console.error('Error fetching user data: ', error);
                     }
-                    setInitialDataLoaded(true);
-                } catch (error) {
-                    console.error('Error fetching user data: ', error);
-                }
-            };
+                };
 
-            loadUserData();
+                loadUserData();
+            }
         }
     }, [email, initialDataLoaded]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true)
+        setLoading(true);
         const userData = { nome, sobrenome, imageSrc };
 
         if (initialDataLoaded) {
             // Atualizar documento existente
             await updateDocument(email, userData);
-            setLoading(false)
-            setReRender((prev) => !prev)
+            localStorage.setItem('userData', JSON.stringify(userData));
+            setLoading(false);
+            setReRender((prev) => !prev);
         } else {
             // Criar novo documento
             await addDocument(email, userData);
-            setLoading(false)
+            localStorage.setItem('userData', JSON.stringify(userData));
+            setLoading(false);
         }
     };
 
@@ -125,6 +138,9 @@ const Configuracoes = () => {
                 const downloadURL = await uploadToStorage(file, 'profileImages', email);
                 // Atualizar a imagem de perfil com a URL obtida após o upload
                 setImageSrc(downloadURL);
+                // Atualizar o localStorage com a nova imagem
+                const updatedUserData = { ...JSON.parse(localStorage.getItem('userData')), imageSrc: downloadURL };
+                localStorage.setItem('userData', JSON.stringify(updatedUserData));
             } catch (error) {
                 console.error('Error uploading image: ', error);
             }
@@ -132,10 +148,8 @@ const Configuracoes = () => {
     };
 
     return !isClient
-        ?
-        <h1 className='bg-[#0B060F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>
-        :
-        (
+        ? <h1 className='bg-[#0B060F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>
+        : (
             <div className="bg-[#0B060F] flex h-screen pb-10 sm:pb-0 container-overflow">
                 <Sidebar />
                 <div className="w-full ml-0 md:ml-[19%]">

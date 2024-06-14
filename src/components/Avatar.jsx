@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { IoIosArrowDown } from "react-icons/io";
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import { useUserContext } from '@/contexts/UserContext';
@@ -12,10 +11,8 @@ const Avatar = ({ name }) => {
     const pathname = usePathname();
     const isDashboard = pathname === '/dashboard';
     const isSettings = pathname === '/dashboard/configuracoes';
-    const { rerender } = useUserContext()
+    const { rerender } = useUserContext();
 
-
-    // Verificar se estamos no navegador antes de acessar localStorage
     const email = typeof window !== 'undefined' ? localStorage.getItem('email') || '' : '';
     const initials = email ? email.substring(0, 2).toUpperCase() : '';
 
@@ -23,23 +20,32 @@ const Avatar = ({ name }) => {
     const [userImage, setUserImage] = useState(`https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const docRef = doc(db, 'users', email);
-                const docSnap = await getDoc(docRef);
+        const storedUserData = localStorage.getItem('userData');
 
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    setUserName(userData.nome || 'SEM NOME');
-                    setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+        if (storedUserData) {
+            const userData = JSON.parse(storedUserData);
+            setUserName(userData.nome || 'SEM NOME');
+            setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+        } else {
+            const fetchUserData = async () => {
+                try {
+                    const docRef = doc(db, 'users', email);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        setUserName(userData.nome || 'SEM NOME');
+                        setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data: ', error);
                 }
-            } catch (error) {
-                console.error('Error fetching user data: ', error);
-            }
-        };
+            };
 
-        fetchUserData();
-    }, [email, rerender]);
+            fetchUserData();
+        }
+    }, [email, initials, rerender]);
 
     const getColor = (letter) => {
         const charCode = letter.toUpperCase().charCodeAt(0) - 64;
@@ -50,7 +56,6 @@ const Avatar = ({ name }) => {
         return 'bg-red-700';
     };
 
-
     const backgroundColor = email ? getColor(email.charAt(0)) : 'bg-gray-300';
 
     const toggleDropdown = () => {
@@ -60,6 +65,7 @@ const Avatar = ({ name }) => {
     const onClickExit = () => {
         localStorage.removeItem('expiryDate');
         localStorage.removeItem('email');
+        localStorage.removeItem('userData');
         router.push('/');
     };
 
@@ -79,7 +85,7 @@ const Avatar = ({ name }) => {
     };
 
     return (
-        <div className="relative">
+        <div className="relative dropdown-container">
             <div
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={(e) => {

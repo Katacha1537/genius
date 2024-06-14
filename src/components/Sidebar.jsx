@@ -21,23 +21,33 @@ export default function Sidebar() {
     const [userImage, setUserImage] = useState(`https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const docRef = doc(db, 'users', emailStorage);
-                const docSnap = await getDoc(docRef);
+        const storedUserData = localStorage.getItem('userData');
 
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    setUserName(userData.nome || emailStorage);
-                    setUserLastName(userData.sobrenome || '');
-                    setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+        if (storedUserData) {
+            const userData = JSON.parse(storedUserData);
+            setUserName(userData.nome || emailStorage);
+            setUserLastName(userData.sobrenome || '');
+            setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+        } else {
+            const fetchUserData = async () => {
+                try {
+                    const docRef = doc(db, 'users', emailStorage);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        setUserName(userData.nome || emailStorage);
+                        setUserLastName(userData.sobrenome || '');
+                        setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data: ', error);
                 }
-            } catch (error) {
-                console.error('Error fetching user data: ', error);
-            }
-        };
+            };
 
-        fetchUserData();
+            fetchUserData();
+        }
     }, [emailStorage, initials, rerender]);
 
     return (
@@ -45,7 +55,9 @@ export default function Sidebar() {
             {rerender && <span className="hidden"></span>}
             {console.log(rerender)}
             <div className='w-full flex justify-center items-center mt-5'>
-                <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-32 sm:w-40 mb-0 block" />
+                <a href="/dashboard" className="sidebar-link">
+                    <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-32 sm:w-40 mb-0 block" />
+                </a>
             </div>
             {/* Perfil do usuário */}
             <div className="p-4 mt-5">
@@ -77,9 +89,6 @@ export default function Sidebar() {
                     </p>
                 </a>
             </div>
-
-
         </div>
-
     );
 }
