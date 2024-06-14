@@ -4,7 +4,7 @@ const CriadorProdutosEcom = () => {
     return (
         <div className="relative mt-4">
             <h3 className="text-lg text-white font-bold text-center sm:text-left">
-                Criador de Produtos Ecom
+                CRIADOR DE PRODUTOS
             </h3>
             <div className="flex justify-center sm:justify-start ">
                 <Link href="/criador-de-produtos">

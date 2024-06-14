@@ -117,9 +117,9 @@ const Dashboard = () => {
                     <div className="p-6 pt-4 pb-2">
                         <Section titleUm='CRIE EM UM' titleDois='PASSE DE MÁGICA' />
                         <CriadorProdutosEcom />
-                        <Carousel items={itemsMentoria} title="Mentoria Ecom" />
-                        <Carousel items={items} title="Scripts (Em Breve)" />
-                        <Carousel items={itemsGeradores} title="Geradores (Em Breve)" />
+                        <Carousel items={itemsMentoria} title="MENTORIA ECOM" />
+                        <Carousel items={items} title="SCRIPTS DE VENDAS" />
+                        <Carousel items={itemsGeradores} title="GERADOR DE CONVERSÃO" />
                     </div>
                 </div>
             </div >

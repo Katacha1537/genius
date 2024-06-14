@@ -104,7 +104,7 @@ const Dashboard = () => {
                     <Header />
                     <div className="p-6 pt-4 pb-2">
                         <Section titleUm='RESPOSTA MÁGICAS' titleDois='' />
-                        <Carousel items={itemsMentoria} title="Agentes Monitores" />
+                        <Carousel items={itemsMentoria} title="EXPERT'S I.A" />
                     </div>
                 </div>
             </div >

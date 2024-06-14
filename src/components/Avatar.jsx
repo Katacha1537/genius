@@ -17,7 +17,7 @@ const Avatar = ({ name }) => {
     const initials = email ? email.substring(0, 2).toUpperCase() : '';
 
     const [userName, setUserName] = useState('SEM NOME');
-    const [userImage, setUserImage] = useState(`https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+    const [userImage, setUserImage] = useState(`https://via.placeholder.com/350x350/`);
 
     useEffect(() => {
         const storedUserData = localStorage.getItem('userData');
@@ -25,7 +25,7 @@ const Avatar = ({ name }) => {
         if (storedUserData) {
             const userData = JSON.parse(storedUserData);
             setUserName(userData.nome || 'SEM NOME');
-            setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+            setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/`);
         } else {
             const fetchUserData = async () => {
                 try {
@@ -35,7 +35,7 @@ const Avatar = ({ name }) => {
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
                         setUserName(userData.nome || 'SEM NOME');
-                        setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                        setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/`);
                         localStorage.setItem('userData', JSON.stringify(userData));
                     }
                 } catch (error) {
@@ -49,10 +49,10 @@ const Avatar = ({ name }) => {
 
     const getColor = (letter) => {
         const charCode = letter.toUpperCase().charCodeAt(0) - 64;
-        if (charCode >= 1 && charCode <= 5) return 'bg-blue-700';
-        if (charCode >= 6 && charCode <= 10) return 'bg-yellow-700';
-        if (charCode >= 11 && charCode <= 15) return 'bg-purple-700';
-        if (charCode >= 16 && charCode <= 20) return 'bg-green-700';
+        if (charCode >= 1 && charCode <= 5) return '1D4FD8';
+        if (charCode >= 6 && charCode <= 10) return 'ffa925';
+        if (charCode >= 11 && charCode <= 15) return '7D23CE';
+        if (charCode >= 16 && charCode <= 20) return '168142';
         return 'bg-red-700';
     };
 
@@ -84,6 +84,8 @@ const Avatar = ({ name }) => {
         }
     };
 
+    console.log(backgroundColor)
+
     return (
         <div className="relative dropdown-container">
             <div
@@ -94,7 +96,7 @@ const Avatar = ({ name }) => {
                 }}
             >
                 <img
-                    src={userImage}
+                    src={`${userImage}${backgroundColor}/FFFFFF?text=${initials}`}
                     alt={userName}
                     className={`h-10 w-10 rounded-full border-2 border-white ${backgroundColor}`}
                 />

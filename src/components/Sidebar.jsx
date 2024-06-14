@@ -13,12 +13,14 @@ export default function Sidebar() {
     const isSettings = pathname === '/dashboard/configuracoes';
     const emailStorage = typeof window !== 'undefined' ? localStorage.getItem('email') || '' : ''
     const initials = emailStorage ? emailStorage.substring(0, 2).toUpperCase() : ''
+    console.log(emailStorage)
+    console.log(initials)
 
     const { rerender } = useUserContext()
 
     const [userName, setUserName] = useState('');
     const [userLastName, setUserLastName] = useState('');
-    const [userImage, setUserImage] = useState(`https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+    const [userImage, setUserImage] = useState(`https://via.placeholder.com/350x350/`);
 
     useEffect(() => {
         const storedUserData = localStorage.getItem('userData');
@@ -27,7 +29,7 @@ export default function Sidebar() {
             const userData = JSON.parse(storedUserData);
             setUserName(userData.nome || emailStorage);
             setUserLastName(userData.sobrenome || '');
-            setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+            setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/`);
         } else {
             const fetchUserData = async () => {
                 try {
@@ -38,7 +40,7 @@ export default function Sidebar() {
                         const userData = docSnap.data();
                         setUserName(userData.nome || emailStorage);
                         setUserLastName(userData.sobrenome || '');
-                        setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                        setUserImage(userData.imageSrc || `https://via.placeholder.com/350x350/`);
                         localStorage.setItem('userData', JSON.stringify(userData));
                     }
                 } catch (error) {
@@ -49,6 +51,17 @@ export default function Sidebar() {
             fetchUserData();
         }
     }, [emailStorage, initials, rerender]);
+
+    const getColor = (letter) => {
+        const charCode = letter.toUpperCase().charCodeAt(0) - 64;
+        if (charCode >= 1 && charCode <= 5) return '1D4FD8';
+        if (charCode >= 6 && charCode <= 10) return 'ffa925';
+        if (charCode >= 11 && charCode <= 15) return '7D23CE';
+        if (charCode >= 16 && charCode <= 20) return '168142';
+        return 'bg-red-700';
+    };
+
+    const backgroundColor = emailStorage ? getColor(emailStorage.charAt(0)) : 'bg-gray-300';
 
     return (
         <div className="bg-[#0B060F] hidden md:block fixed h-screen w-64 min-w-64 flex flex-col justify-between border-r border-[#382f3f]">
@@ -62,8 +75,8 @@ export default function Sidebar() {
             {/* Perfil do usuário */}
             <div className="p-4 mt-5">
                 <img
-                    src={userImage}
-                    alt={userName}
+                    src={`${userImage}${backgroundColor}/FFFFFF?text=${initials}`}
+                    alt={initials}
                     className="rounded-full ring-purple-500 w-24 h-24 mx-auto mb-2 ring-2 cursor-pointer"
                 />
                 <p className="text-white text-sm text-center font-bold">{userName} {userLastName}</p>

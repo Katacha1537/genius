@@ -20,8 +20,9 @@ const Configuracoes = () => {
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-    const [imageSrc, setImageSrc] = useState('');
+    const [imageSrc, setImageSrc] = useState('https://via.placeholder.com/350x350/');
     const [loading, setLoading] = useState(false);
+    const [loadingImg, setLoadingImg] = useState(false);
 
     const { setReRender } = useUserContext()
 
@@ -84,7 +85,7 @@ const Configuracoes = () => {
                 const userData = JSON.parse(storedUserData);
                 setNome(userData.nome || '');
                 setSobrenome(userData.sobrenome || '');
-                setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/`);
                 setInitialDataLoaded(true);
             } else {
                 // Carregar dados do Firestore
@@ -97,7 +98,7 @@ const Configuracoes = () => {
                             const userData = docSnap.data();
                             setNome(userData.nome || '');
                             setSobrenome(userData.sobrenome || '');
-                            setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/5C0ACD/FFFFFF?text=${initials}`);
+                            setImageSrc(userData.imageSrc || `https://via.placeholder.com/350x350/`);
                             localStorage.setItem('userData', JSON.stringify(userData));
                         }
                         setInitialDataLoaded(true);
@@ -110,6 +111,17 @@ const Configuracoes = () => {
             }
         }
     }, [email, initialDataLoaded]);
+
+    const getColor = (letter) => {
+        const charCode = letter.toUpperCase().charCodeAt(0) - 64;
+        if (charCode >= 1 && charCode <= 5) return '1D4FD8';
+        if (charCode >= 6 && charCode <= 10) return 'ffa925';
+        if (charCode >= 11 && charCode <= 15) return '7D23CE';
+        if (charCode >= 16 && charCode <= 20) return '168142';
+        return 'bg-red-700';
+    };
+
+    const backgroundColor = emailStorage ? getColor(emailStorage.charAt(0)) : 'bg-gray-300';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -141,6 +153,9 @@ const Configuracoes = () => {
                 // Atualizar o localStorage com a nova imagem
                 const updatedUserData = { ...JSON.parse(localStorage.getItem('userData')), imageSrc: downloadURL };
                 localStorage.setItem('userData', JSON.stringify(updatedUserData));
+                // Atualizar o Firestore com a nova imagem
+                await updateDocument(email, { imageSrc: downloadURL });
+                setReRender((prev) => !prev)
             } catch (error) {
                 console.error('Error uploading image: ', error);
             }
@@ -163,15 +178,22 @@ const Configuracoes = () => {
                                 style={{ display: 'none' }}
                                 onChange={handleImageChange}
                             />
-                            <img
-                                src={imageSrc}
-                                alt="Lucas Katacha"
-                                className="rounded-full ring-purple-500 w-16 h-16 mb-2 ring-2 cursor-pointer"
-                                onClick={() => document.getElementById('imageUpload').click()}
-                            />
+                            {
+                                loadingImg
+                                    ?
+                                    ''
+                                    :
+                                    <img
+                                        src={`${imageSrc}${backgroundColor}/FFFFFF?text=${initials}`}
+                                        alt="Lucas Katacha"
+                                        className="rounded-full ring-purple-500 w-16 h-16 mb-2 ring-2 cursor-pointer"
+                                        onClick={() => document.getElementById('imageUpload').click()}
+                                    />
+                            }
+
                             <h2 className="text-white font-bold mt-4">Perfil</h2>
-                            <form onSubmit={handleSubmit} className="w-full md:w-[30%]">
-                                <div className="flex flex-col gap-3">
+                            <form onSubmit={handleSubmit} className="w-full mt-2 md:w-[30%]">
+                                <div className="flex flex-col">
                                     <p className="text-white">Nome:</p>
                                     <input
                                         type="text"
@@ -180,7 +202,7 @@ const Configuracoes = () => {
                                         onChange={(e) => setNome(e.target.value)}
                                     />
                                 </div>
-                                <div className="flex flex-col gap-3">
+                                <div className="flex flex-col mt-2">
                                     <p className="text-white">Sobrenome:</p>
                                     <input
                                         type="text"
@@ -189,13 +211,13 @@ const Configuracoes = () => {
                                         onChange={(e) => setSobrenome(e.target.value)}
                                     />
                                 </div>
-                                <div className="flex flex-col gap-3 mb-4">
+                                <div className="flex flex-col mb-4 mt-2">
                                     <p className="text-white">Email:</p>
                                     <input
                                         value={email}
                                         disabled
                                         type="text"
-                                        className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
+                                        className="formsText hover:cursor-not-allowed w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <button
