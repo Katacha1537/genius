@@ -167,7 +167,7 @@ const Configuracoes = () => {
         : (
             <div className="bg-[#0B060F] flex h-screen pb-10 sm:pb-0 container-overflow">
                 <Sidebar />
-                <div className="w-full ml-0 md:ml-[19%]">
+                <div className="w-full ml-0 md:ml-[255px]">
                     <div>
                         <Header />
                         <div className="p-6 pt-4 pb-2 flex flex-col">

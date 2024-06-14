@@ -128,7 +128,12 @@ function App() {
     // Verifica se o email existe no Airtable
     const record = await fetchEmailRecord(email);
     if (!record) {
-      setErrorMessage('Email não encontrado no Airtable.');
+      setErrorMessage(
+        <span>
+          Email não encontrado. Fale com o suporte {' '}
+          <a href="http://suporte.jeffecom.com" className='text-[#E741E7] font-bold formsText' target="_blank" rel="noopener noreferrer">Clique aqui</a>.
+        </span>
+      )
       setIsLoading(false);
       return;
     }
@@ -142,13 +147,12 @@ function App() {
         // Se não existir, cria um novo usuário no Firebase
         const userCreated = await createFirebaseUser(email);
         if (!userCreated) {
-          setErrorMessage('Erro ao criar usuário no Firebase.');
+          setErrorMessage('Erro ao criar usuário no banco de dados.');
           setIsLoading(false);
           return;
         }
       }
 
-      console.log('Email digitado:', email);
       const expiryDate = new Date();
       expiryDate.setDate(expiryDate.getDate() + 15);
 

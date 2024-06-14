@@ -84,8 +84,6 @@ const Avatar = ({ name }) => {
         }
     };
 
-    console.log(backgroundColor)
-
     return (
         <div className="relative dropdown-container">
             <div

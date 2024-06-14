@@ -115,7 +115,6 @@ const Dashboard = () => {
                 <div className="w-full ml-0 md:ml-[255px]">
                     <Header />
                     <div className="p-6 pt-4 pb-2">
-                        <Section titleUm='CRIE EM UM' titleDois='PASSE DE MÁGICA' />
                         <CriadorProdutosEcom />
                         <Carousel items={itemsMentoria} title="MENTORIA ECOM" />
                         <Carousel items={items} title="SCRIPTS DE VENDAS" />

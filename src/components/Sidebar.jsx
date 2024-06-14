@@ -13,8 +13,6 @@ export default function Sidebar() {
     const isSettings = pathname === '/dashboard/configuracoes';
     const emailStorage = typeof window !== 'undefined' ? localStorage.getItem('email') || '' : ''
     const initials = emailStorage ? emailStorage.substring(0, 2).toUpperCase() : ''
-    console.log(emailStorage)
-    console.log(initials)
 
     const { rerender } = useUserContext()
 
@@ -66,7 +64,6 @@ export default function Sidebar() {
     return (
         <div className="bg-[#0B060F] hidden md:block fixed h-screen w-64 min-w-64 flex flex-col justify-between border-r border-[#382f3f]">
             {rerender && <span className="hidden"></span>}
-            {console.log(rerender)}
             <div className='w-full flex justify-center items-center mt-5'>
                 <a href="/dashboard" className="sidebar-link">
                     <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-32 sm:w-40 mb-0 block" />

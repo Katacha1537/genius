@@ -83,7 +83,6 @@ const Carousel = ({ items, title }) => {
 
     const renderTitleWithEmphasis = (title) => {
         const parts = title.split("(Em Breve)");
-        console.log(parts.length);
         return (
             <h3 className="text-lg text-white font-bold text-center sm:text-left">
                 {parts.length === 1 ? `${parts[0]}` : <div>{parts[0]} <span className="text-purple-500">(Em Breve)</span></div>}

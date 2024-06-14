@@ -4,12 +4,12 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 // Firebase config aqui embaixo
 const firebaseConfig = {
-    apiKey: "AIzaSyBYm0Y43taxexGDcurzA8wZEy0fgOcIfxY",
-    authDomain: "genius-b0f27.firebaseapp.com",
-    projectId: "genius-b0f27",
-    storageBucket: "genius-b0f27.appspot.com",
-    messagingSenderId: "632657239839",
-    appId: "1:632657239839:web:4d8277095974d140339a2a"
+    apiKey: process.env.NEXT_PUBLIC__FIREBASE_APIKEY,
+    authDomain: process.env.NEXT_PUBLIC__FIREBASE_AUTHDOMAIN,
+    projectId: process.env.NEXT_PUBLIC__FIREBASE_PROJECTID,
+    storageBucket: process.env.NEXT_PUBLIC__FIREBASE_STORAGEBUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC__FIREBASE_MESSAGINGSENDERID,
+    appId: process.env.NEXT_PUBLIC__FIREBASE_APPID
 };
 
 // Initialize Firebase
