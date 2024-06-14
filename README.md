@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Genius E-Commerce Platform
 
-## Getting Started
+![Genius Logo](https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg)
 
-First, run the development server:
+## Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Genius é uma plataforma avançada projetada para otimizar a experiência de vendas online. Com diversas ferramentas integradas, incluindo criador de produtos, mentoria ecom, scripts de vendas e gerador de conversão, a plataforma oferece um conjunto completo de funcionalidades para impulsionar o sucesso do seu negócio online.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Dashboard**: Visão geral das atividades e métricas importantes.
+- **Configurações**: Personalize seu perfil e configurações da conta.
+- **Criador de Produtos**: Ferramenta para adicionar e gerenciar produtos.
+- **Mentoria ECOM**: Acesso a materiais e suporte especializado.
+- **Scripts de Vendas**: Recursos para melhorar a eficácia das vendas.
+- - **Expert's I.A**: Integração com inteligência artificial para melhorar a experiência do usuário.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Em Desenvolvimento
 
-To learn more about Next.js, take a look at the following resources:
+Estamos constantemente trabalhando para trazer novas funcionalidades e melhorias. Algumas das funcionalidades em desenvolvimento incluem:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Gerador de Conversão**: Em breve.
+- **Mais funcionalidades em breve**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Estrutura do Projeto
 
-## Deploy on Vercel
+- **Frontend**: Desenvolvido com Next.js e React.
+- **Backend**: Utiliza Firebase para banco de dados e armazenamento.
+- **Estilos**: Tailwind CSS para estilização.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Instalação e Configuração
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Pré-requisitos
+
+- Node.js
+- Yarn ou npm
+
+### Passos para instalação
+
+1. Clone o repositório:
+    ```bash
+    git clone [https://github.com/Katacha1537/genius.git]
+    cd genius-ecommerce
+    ```
+
+2. Instale as dependências:
+    ```bash
+    yarn install
+    # ou
+    npm install
+    ```
+
+3. Configure as variáveis de ambiente:
+    - Crie um arquivo `.env.local` na raiz do projeto e adicione suas configurações do Firebase e outras variáveis necessárias.
+
+4. Inicie o servidor de desenvolvimento:
+    ```bash
+    yarn dev
+    # ou
+    npm run dev
+    ```
+
+5. Abra o navegador e acesse `http://localhost:3000`.
+
+## Contribuição
+
+Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature ou correção de bug:
+    ```bash
+    git checkout -b minha-feature
+    ```
+3. Commit suas mudanças:
+    ```bash
+    git commit -m 'Adiciona minha feature'
+    ```
+4. Envie para a branch principal:
+    ```bash
+    git push origin minha-feature
+    ```
+5. Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## Contato
+
+- **Criador**: Lucas Katacha
+- **Website**: [Instagram Katacha](https://instagram.com/katachalucas)
+- **Email**: [lucasgabrieljaci20@dominio.com](mailto:seu-email@dominio.com)
+
+---
+
+### Assinatura
+
+```javascript
+useEffect(() => {
+  console.log(
+    "%cCriado por Lucas Katacha%c\n[https://geniusecom.io](https://instagram.com/katachalucas)",
+    "color: #fff; background: #222; padding: 5px 10px; border-radius: 5px; font-size: 14px;",
+    "color: #000; background: #ffcc00; padding: 5px 10px; border-radius: 5px; font-size: 14px;"
+  );
+}, []);
