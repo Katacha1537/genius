@@ -40,7 +40,7 @@ Estamos constantemente trabalhando para trazer novas funcionalidades e melhorias
 
 1. Clone o repositório:
     ```bash
-    git clone [https://github.com/Katacha1537/genius.git]
+    git clone 'https://github.com/Katacha1537/genius.git'
     cd genius-ecommerce
     ```
 
@@ -91,16 +91,3 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICEN
 - **Criador**: Lucas Katacha
 - **Website**: [Instagram Katacha](https://instagram.com/katachalucas)
 - **Email**: [lucasgabrieljaci20@dominio.com](mailto:seu-email@dominio.com)
-
----
-
-### Assinatura
-
-```javascript
-useEffect(() => {
-  console.log(
-    "%cCriado por Lucas Katacha%c\n[https://geniusecom.io](https://instagram.com/katachalucas)",
-    "color: #fff; background: #222; padding: 5px 10px; border-radius: 5px; font-size: 14px;",
-    "color: #000; background: #ffcc00; padding: 5px 10px; border-radius: 5px; font-size: 14px;"
-  );
-}, []);
