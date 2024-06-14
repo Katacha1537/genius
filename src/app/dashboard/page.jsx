@@ -90,12 +90,12 @@ const Dashboard = () => {
     const itemsMentoria = [
         <div>
             <Link href="/mentoria">
-                <div className="mt-2 mr-4 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/mentoriaEcom.png')] bg-cover h-[600px] md:h-[400px] w-[350px]" />
+                <div className="mt-2 mr-4 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/mentoriaEcom.png')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
             </Link>
         </div>,
         <div>
             <Link href="/experts">
-                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/expertEcom.png')] bg-cover h-[600px] md:h-[400px] w-[350px]" />
+                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/expertEcom.png')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
             </Link>
         </div>,
     ]
@@ -128,7 +128,7 @@ export default Dashboard;
 
 const InactiveCard = ({ imageUrl }) => {
     return (
-        <div className="relative mt-2 rounded-xl mb-2 mr-4 h-[600px] md:h-[400px] w-[350px] bg-cover bg-center" style={{ backgroundImage: `url(${imageUrl})` }}>
+        <div className="relative mt-2 rounded-xl mb-2 mr-4 h-[600px] w-[350px] md:h-[400px] md:w-[248px] bg-cover bg-center" style={{ backgroundImage: `url(${imageUrl})` }}>
             <div className="absolute inset-0 bg-[#000] opacity-60 rounded-xl"></div> {/* Camada semi-transparente */}
             <div className="absolute top-3 right-4 bg-purple-600 text-white text-xs px-4 py-2 rounded-full z-10 opacity-100">
                 Em breve
