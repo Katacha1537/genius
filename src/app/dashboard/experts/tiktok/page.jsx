@@ -58,9 +58,9 @@ export default function Mentoria() {
     return (
         <div style={{ width: '100%', height: '100vh' }} className="bg-custom-purple">
             <iframe
-                src="https://chat.comunidadeecom.com/brain-ecom-4sbn4um7"
+                src="https://chat.comunidadeecom.com/monitor-tiktok-ads-l0c72kln"
                 style={{ border: 'none', width: '100%', height: '100%' }}
-                title="Monitor - MASTER"
+                title="Monitor - TikTok Ads"
             >
 
             </iframe>

@@ -69,35 +69,38 @@ const Dashboard = () => {
     }, [navigate])
 
     const items = [
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />,
-        <InactiveCard imageUrl="/assets/scriptEcom.png" />
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />,
+        <InactiveCard imageUrl="/assets/scriptEcom.webp" />
     ]
 
     const itemsGeradores = [
-        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.png" />,
-        <InactiveCard imageUrl="/assets/geradoresEcom.png" />
+        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />,
+        <InactiveCard imageUrl="/assets/geradoresEcom.webp" />
     ]
     const itemsMentoria = [
         <div>
             <Link href="/mentoria">
-                <div className="mt-2 mr-4 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/mentoriaEcom.png')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
+                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/mentoriaEcom.webp')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
             </Link>
         </div>,
         <div>
-            <Link href="/experts">
-                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/expertEcom.png')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
+            <Link href="/dashboard/experts">
+                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 ml-4 bg-[url('/assets/expertEcom.webp')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
             </Link>
         </div>,
+        <span className="hidden"></span>,
+        <span className="hidden"></span>,
+        <span className="hidden"></span>
     ]
 
 
@@ -113,7 +116,7 @@ const Dashboard = () => {
                 <div className="w-full ml-0 md:ml-[19%]">
                     <Header />
                     <div className="p-6 pt-4 pb-2">
-                        <Section />
+                        <Section titleUm='CRIE EM UM' titleDois='PASSE DE MÁGICA' />
                         <CriadorProdutosEcom />
                         <Carousel items={itemsMentoria} title="Mentoria Ecom" />
                         <Carousel items={items} title="Scripts (Em Breve)" />

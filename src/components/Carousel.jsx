@@ -45,7 +45,7 @@ const Carousel = ({ items, title }) => {
         if (isDragging.current) {
             const dragDistance = clientX - dragStartX;
             const itemWidth = carouselRef.current.clientWidth / itemsToShow;
-            const itemsDragged = Math.round(dragDistance / itemWidth);
+            const itemsDragged = dragDistance / itemWidth;
             setCurrentIndex(startIndex - itemsDragged);
         }
     };
@@ -54,12 +54,15 @@ const Carousel = ({ items, title }) => {
         if (isDragging.current) {
             setDragging(false);
             isDragging.current = false;
-            // Verifica se currentIndex está fora dos limites e ajusta se necessário
+            // Ajusta o currentIndex para o item mais próximo
+            const roundedIndex = Math.round(currentIndex);
             const maxIndex = items.length - itemsToShow;
-            if (currentIndex < 0) {
+            if (roundedIndex < 0) {
                 setCurrentIndex(0);
-            } else if (currentIndex > maxIndex) {
+            } else if (roundedIndex > maxIndex) {
                 setCurrentIndex(maxIndex);
+            } else {
+                setCurrentIndex(roundedIndex);
             }
         }
     };
@@ -80,9 +83,10 @@ const Carousel = ({ items, title }) => {
 
     const renderTitleWithEmphasis = (title) => {
         const parts = title.split("(Em Breve)");
+        console.log(parts.length);
         return (
             <h3 className="text-lg text-white font-bold text-center sm:text-left">
-                {parts[0]}<span className="text-purple-500">(Em Breve)</span>{parts[1]}
+                {parts.length === 1 ? `${parts[0]}` : <div>{parts[0]} <span className="text-purple-500">(Em Breve)</span></div>}
             </h3>
         );
     };
@@ -91,23 +95,23 @@ const Carousel = ({ items, title }) => {
         <div
             ref={carouselRef}
             className="relative w-full overflow-hidden mt-4"
-            onTouchStart={(e) => handleTouchStart(e)}
-            onTouchMove={(e) => handleTouchMove(e)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             onMouseDown={(e) => handleDragStart(e.clientX)}
-            onMouseMove={(e) => handleDragMove(e.clientX)}
+            onMouseMove={(e) => dragging && handleDragMove(e.clientX)}
             onMouseUp={handleDragEnd}
             onMouseLeave={handleDragEnd}
         >
             {renderTitleWithEmphasis(title)}
             <div
-                className="flex transition-transform duration-300"
+                className="flex transition-transform duration-300 ease-in-out"
                 style={{
-                    transform: `translateX(-${(Math.min(currentIndex, items.length - itemsToShow) / itemsToShow) * 100}%)`
+                    transform: `translateX(-${(Math.min(Math.max(currentIndex, 0), items.length - itemsToShow) / itemsToShow) * 100}%)`
                 }}
             >
                 {items.map((item, index) => (
-                    <div key={index} className={`w-1/${itemsToShow === 1 ? 1 : itemsToShow} gap-4`}>
+                    <div key={index} className={`w-${Math.floor(100 / itemsToShow)} gap-4`}>
                         {item}
                     </div>
                 ))}
