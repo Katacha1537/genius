@@ -94,12 +94,9 @@ const Dashboard = () => {
         </div>,
         <div>
             <Link href="/dashboard/experts">
-                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 ml-4 bg-[url('/assets/expertEcom.webp')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
+                <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/expertEcom.webp')] bg-cover h-[600px] w-[350px] md:h-[400px] md:w-[248px]" />
             </Link>
         </div>,
-        <span className="hidden"></span>,
-        <span className="hidden"></span>,
-        <span className="hidden"></span>
     ]
 
 

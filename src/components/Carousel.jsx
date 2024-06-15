@@ -2,32 +2,31 @@ import { useState, useRef, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Carousel = ({ items, title }) => {
-    const [startIndex, setStartIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [dragging, setDragging] = useState(false);
     const [dragStartX, setDragStartX] = useState(0);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [dragOffset, setDragOffset] = useState(0);
     const carouselRef = useRef(null);
-    const isDragging = useRef(false);
-    const [itemsToShow, setItemsToShow] = useState(4); // Número inicial de itens visíveis
+    const [itemsToShow, setItemsToShow] = useState(4);
 
-    // Definindo quantos itens mostrar com base no tamanho da tela
+    const itemWidth = window.innerWidth >= 768 ? 248 : 350;
+    const itemSpacing = 16;
+
     const updateItemsToShow = () => {
         if (window.innerWidth >= 1024) {
-            setItemsToShow(4); // Desktop
+            setItemsToShow(4);
         } else if (window.innerWidth >= 768) {
-            setItemsToShow(3); // Tablet
+            setItemsToShow(3);
         } else {
-            setItemsToShow(1); // Mobile
+            setItemsToShow(1);
         }
     };
 
     useEffect(() => {
-        // Atualiza o número de itens visíveis quando a tela for redimensionada
         const handleResize = () => {
             updateItemsToShow();
         };
         window.addEventListener('resize', handleResize);
-        // Define o número inicial de itens visíveis
         updateItemsToShow();
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -37,34 +36,27 @@ const Carousel = ({ items, title }) => {
     const handleDragStart = (clientX) => {
         setDragging(true);
         setDragStartX(clientX);
-        setStartIndex(currentIndex);
-        isDragging.current = true;
     };
 
     const handleDragMove = (clientX) => {
-        if (isDragging.current) {
+        if (dragging) {
             const dragDistance = clientX - dragStartX;
-            const itemWidth = carouselRef.current.clientWidth / itemsToShow;
-            const itemsDragged = dragDistance / itemWidth;
-            setCurrentIndex(startIndex - itemsDragged);
+            setDragOffset(dragDistance);
         }
     };
 
     const handleDragEnd = () => {
-        if (isDragging.current) {
-            setDragging(false);
-            isDragging.current = false;
-            // Ajusta o currentIndex para o item mais próximo
-            const roundedIndex = Math.round(currentIndex);
-            const maxIndex = items.length - itemsToShow;
-            if (roundedIndex < 0) {
-                setCurrentIndex(0);
-            } else if (roundedIndex > maxIndex) {
-                setCurrentIndex(maxIndex);
-            } else {
-                setCurrentIndex(roundedIndex);
-            }
-        }
+        setDragging(false);
+
+        const totalItemWidth = itemWidth + itemSpacing;
+        const itemsDragged = dragOffset / totalItemWidth;
+        const newCurrentIndex = Math.round(currentIndex - itemsDragged);
+
+        const maxIndex = Math.max(0, items.length - itemsToShow);
+        const clampedIndex = Math.min(Math.max(newCurrentIndex, 0), maxIndex);
+
+        setCurrentIndex(clampedIndex);
+        setDragOffset(0);
     };
 
     const handleTouchStart = (e) => {
@@ -79,14 +71,6 @@ const Carousel = ({ items, title }) => {
 
     const handleTouchEnd = () => {
         handleDragEnd();
-    };
-
-    const navigateNext = () => {
-        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, items.length - itemsToShow));
-    };
-
-    const navigatePrev = () => {
-        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     };
 
     const renderTitleWithEmphasis = (title) => {
@@ -115,31 +99,31 @@ const Carousel = ({ items, title }) => {
             onMouseLeave={handleDragEnd}
         >
             {renderTitleWithEmphasis(title)}
-            <div className="flex transition-transform duration-300 ease-in-out">
+            <div
+                className="flex transition-transform duration-300 ease-out"
+                style={{
+                    transform: `translateX(-${currentIndex * (itemWidth + itemSpacing)}px) translateX(${dragOffset * 0.8}px)`
+                }}
+            >
+                {items.map((item, index) => (
+                    <div key={index} style={{ width: itemWidth, marginRight: itemSpacing }}>
+                        {item}
+                    </div>
+                ))}
+            </div>
+            <div className="md:hidden">
                 {currentIndex > 0 && (
                     <button
                         className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
-                        onClick={navigatePrev}
+                        onClick={() => setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0))}
                     >
                         <FaChevronLeft />
                     </button>
                 )}
-                <div
-                    style={{
-                        transform: `translateX(-${(Math.min(Math.max(currentIndex, 0), items.length - itemsToShow) / itemsToShow) * 100}%)`
-                    }}
-                    className="flex"
-                >
-                    {items.map((item, index) => (
-                        <div key={index} className={`w-${Math.floor(100 / itemsToShow)} gap-4`}>
-                            {item}
-                        </div>
-                    ))}
-                </div>
                 {currentIndex < items.length - itemsToShow && (
                     <button
                         className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
-                        onClick={navigateNext}
+                        onClick={() => setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, items.length - itemsToShow))}
                     >
                         <FaChevronRight />
                     </button>
