@@ -80,15 +80,22 @@ Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
     ```bash
     git push origin minha-feature
     ```
+<<<<<<< HEAD
 5. Abra um Pull Request.Em breve
 
+=======
+5. Abra um Pull Request.
+>>>>>>> b3d88e7d5d0f4f55d52b77667776a60ab6c66f21
 
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Contato
+<<<<<<< HEAD
 Em breve
+=======
+>>>>>>> b3d88e7d5d0f4f55d52b77667776a60ab6c66f21
 
 - **Criador**: Lucas Katacha
 - **Website**: [Instagram Katacha](https://instagram.com/katachalucas)
