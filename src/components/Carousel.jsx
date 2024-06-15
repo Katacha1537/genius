@@ -115,7 +115,7 @@ const Carousel = ({ items, title }) => {
             <div className="block md:hidden">
                 {currentIndex > 0 && (
                     <button
-                        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
+                        className="absolute top-[58%] left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
                         onClick={() => setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0))}
                     >
                         <FaChevronLeft />
@@ -123,7 +123,7 @@ const Carousel = ({ items, title }) => {
                 )}
                 {currentIndex < items.length - itemsToShow && (
                     <button
-                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
+                        className="absolute top-[58%] right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
                         onClick={() => setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, items.length - itemsToShow))}
                     >
                         <FaChevronRight />
