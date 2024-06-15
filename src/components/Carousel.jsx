@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Carousel = ({ items, title }) => {
     const [startIndex, setStartIndex] = useState(0);
@@ -81,11 +81,23 @@ const Carousel = ({ items, title }) => {
         handleDragEnd();
     };
 
+    const navigateNext = () => {
+        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, items.length - itemsToShow));
+    };
+
+    const navigatePrev = () => {
+        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    };
+
     const renderTitleWithEmphasis = (title) => {
-        const parts = title.split("(Em Breve)");
+        const parts = title.split('(Em Breve)');
         return (
             <h3 className="text-lg text-white font-bold text-center sm:text-left">
-                {parts.length === 1 ? `${parts[0]}` : <div>{parts[0]} <span className="text-purple-500">(Em Breve)</span></div>}
+                {parts.length === 1 ? `${parts[0]}` : (
+                    <div>
+                        {parts[0]} <span className="text-purple-500">(Em Breve)</span>
+                    </div>
+                )}
             </h3>
         );
     };
@@ -103,17 +115,35 @@ const Carousel = ({ items, title }) => {
             onMouseLeave={handleDragEnd}
         >
             {renderTitleWithEmphasis(title)}
-            <div
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{
-                    transform: `translateX(-${(Math.min(Math.max(currentIndex, 0), items.length - itemsToShow) / itemsToShow) * 100}%)`
-                }}
-            >
-                {items.map((item, index) => (
-                    <div key={index} className={`w-${Math.floor(100 / itemsToShow)} gap-4`}>
-                        {item}
-                    </div>
-                ))}
+            <div className="flex transition-transform duration-300 ease-in-out">
+                {currentIndex > 0 && (
+                    <button
+                        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
+                        onClick={navigatePrev}
+                    >
+                        <FaChevronLeft />
+                    </button>
+                )}
+                <div
+                    style={{
+                        transform: `translateX(-${(Math.min(Math.max(currentIndex, 0), items.length - itemsToShow) / itemsToShow) * 100}%)`
+                    }}
+                    className="flex"
+                >
+                    {items.map((item, index) => (
+                        <div key={index} className={`w-${Math.floor(100 / itemsToShow)} gap-4`}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                {currentIndex < items.length - itemsToShow && (
+                    <button
+                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
+                        onClick={navigateNext}
+                    >
+                        <FaChevronRight />
+                    </button>
+                )}
             </div>
         </div>
     );
