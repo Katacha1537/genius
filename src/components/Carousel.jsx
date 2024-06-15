@@ -9,7 +9,8 @@ const Carousel = ({ items, title }) => {
     const carouselRef = useRef(null);
     const [itemsToShow, setItemsToShow] = useState(4);
 
-    const itemWidth = window.innerWidth >= 768 ? 248 : 350;
+    const itemWidth = window.innerWidth >= 768 ? 248 : 150;
+    const itemHeight = window.innerWidth >= 768 ? null : 250;
     const itemSpacing = 16;
 
     const updateItemsToShow = () => {
@@ -76,7 +77,7 @@ const Carousel = ({ items, title }) => {
     const renderTitleWithEmphasis = (title) => {
         const parts = title.split('(Em Breve)');
         return (
-            <h3 className="text-lg text-white font-bold text-center sm:text-left">
+            <h3 className="text-lg text-white font-bold text-left">
                 {parts.length === 1 ? `${parts[0]}` : (
                     <div>
                         {parts[0]} <span className="text-purple-500">(Em Breve)</span>
@@ -102,16 +103,16 @@ const Carousel = ({ items, title }) => {
             <div
                 className="flex transition-transform duration-300 ease-out"
                 style={{
-                    transform: `translateX(-${currentIndex * (itemWidth + itemSpacing)}px) translateX(${dragOffset * 0.8}px)`
+                    transform: `translateX(-${currentIndex * (itemWidth + itemSpacing)}px) translateX(${dragOffset * 0.9}px)`
                 }}
             >
                 {items.map((item, index) => (
-                    <div key={index} style={{ width: itemWidth, marginRight: itemSpacing }}>
+                    <div key={index} style={{ width: itemWidth, height: itemHeight, marginRight: itemSpacing }}>
                         {item}
                     </div>
                 ))}
             </div>
-            <div className="md:hidden">
+            <div className="block md:hidden">
                 {currentIndex > 0 && (
                     <button
                         className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
