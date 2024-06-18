@@ -1,13 +1,13 @@
 // pages/finishSignUp.js
 'use client'
-import { useEffect, useState } from 'react';
+
+import { Suspense, useEffect, useState } from 'react';
 import { useLogin } from '@/hooks/useLogin'; // Certifique-se de que o caminho para useLogin está correto
 import { useRouter, useSearchParams } from 'next/navigation';
 import ToastManager from '@/components/ToastManager';
 
-export default function FinishSignUp() {
+const FinishSignUp = ({ searchParams }) => {
     const { completeLogin, error, isPending } = useLogin();
-    const searchParams = useSearchParams()
     const navigation = useRouter();
 
     const [toasts, setToasts] = useState([]);
@@ -25,12 +25,12 @@ export default function FinishSignUp() {
 
         const handleCompleteLogin = async () => {
             try {
-                addToast('Analizando Token', 'info')
+                addToast('Analisando Token', 'info');
                 const completed = await completeLogin(authKey);
-                addToast('Token Aprovado', 'success')
+                addToast('Token Aprovado', 'success');
                 navigation.push(completed);
             } catch (err) {
-                addToast('Token Invalido', 'error')
+                addToast('Token Inválido', 'error');
                 console.error('Erro ao completar login:', err);
                 navigation.push('/');
             }
@@ -39,7 +39,7 @@ export default function FinishSignUp() {
         if (authKey) {
             handleCompleteLogin();
         }
-    }, []);
+    }, [searchParams]);
 
     return (
         <div>
@@ -49,4 +49,21 @@ export default function FinishSignUp() {
             </h1>
         </div>
     );
-}
+};
+
+const FinishSignUpWithSuspense = () => {
+    const searchParams = useSearchParams();
+    return (
+        <Suspense
+            fallback={
+                <h1 className='bg-[#0B060F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>
+                    <p>Carregando...</p>
+                </h1>
+            }
+        >
+            <FinishSignUp searchParams={searchParams} />
+        </Suspense>
+    );
+};
+
+export default FinishSignUpWithSuspense;
