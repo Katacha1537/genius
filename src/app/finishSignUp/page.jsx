@@ -21,7 +21,7 @@ export default function FinishSignUp({ searchParams }) {
 
     useEffect(() => {
         const authKey = searchParams.authKey;
-
+        console.log(authKey)
         const handleCompleteLogin = async () => {
             try {
                 addToast('Analizando Token', 'info')
