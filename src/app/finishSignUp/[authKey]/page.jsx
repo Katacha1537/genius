@@ -25,6 +25,15 @@ export default function FinishSignUp({ params }) {
         console.log(authKey)
         const handleCompleteLogin = async () => {
             try {
+                let email = window.localStorage.getItem('emailForSignIn');
+                if (!email) {
+                    addToast('Email não encontrado', 'error')
+                    setTimeout(() => {
+                        console.log('5 second passed');
+                    }, 5000)
+                    navigation.push('/')
+                }
+
                 addToast('Analizando Token', 'info')
                 const completed = await completeLogin(authKey);
                 addToast('Token Aprovado', 'success')

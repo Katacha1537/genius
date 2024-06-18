@@ -86,16 +86,11 @@ export const useLogin = () => {
     }
   };
 
-  const completeLogin = async (authKey) => {
+  const completeLogin = async (authKey, email) => {
     setError(null);
     setIsPending(true);
     console.log('entrou: ', authKey)
     try {
-      let email = window.localStorage.getItem('emailForSignIn');
-      console.log('pegou parametro, e o email')
-      if (!email) {
-        email = window.prompt('Por favor, forneça seu e-mail para confirmação');
-      }
       console.log('verificou o email')
       const user = await fetchFirebaseUser(email);
       console.log('buscou o usuario')
