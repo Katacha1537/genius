@@ -2,11 +2,11 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { useLogin } from '@/hooks/useLogin'; // Certifique-se de que o caminho para useLogin está correto
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import ToastManager from '@/components/ToastManager';
 
-export default function FinishSignUp({ searchParams }) {
-    const { completeLogin, error, isPending } = useLogin();
+export default function FinishSignUp({ params }) {
+    const { completeLogin } = useLogin();
     const navigation = useRouter();
 
     const [toasts, setToasts] = useState([]);
@@ -20,7 +20,8 @@ export default function FinishSignUp({ searchParams }) {
     }
 
     useEffect(() => {
-        const authKey = searchParams.authKey;
+        console.log('searchParams:', params); // Verifique se searchParams está definido aqui
+        const authKey = params.authKey;
         console.log(authKey)
         const handleCompleteLogin = async () => {
             try {
