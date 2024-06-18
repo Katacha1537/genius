@@ -35,7 +35,7 @@ export default function FinishSignUp({ params }) {
                 }
 
                 addToast('Analizando Token', 'info')
-                const completed = await completeLogin(authKey);
+                const completed = await completeLogin(authKey, email);
                 addToast('Token Aprovado', 'success')
                 navigation.push(completed);
             } catch (err) {
