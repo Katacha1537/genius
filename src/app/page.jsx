@@ -9,15 +9,19 @@ import { useDocument } from '../hooks/useDocument';
 import { db } from '../firebase/config';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import { useLogin } from '@/hooks/useLogin';
 
 function App() {
   const navigate = useRouter();
   // Estado para armazenar o valor do campo de e-mail
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSendMail, setIsSendMail] = useState(false);
   // Estado para armazenar a mensagem de erro
   const [errorMessage, setErrorMessage] = useState('');
   const [isClient, setIsClient] = useState(false);
+
+  const { login, error, isPending } = useLogin()
 
   useEffect(() => {
     setIsClient(true);
@@ -41,7 +45,6 @@ function App() {
       const threshold = 160; // Defina um limiar de altura ou largura que você considera indicativo de DevTools abertas
       if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
         localStorage.removeItem('expiryDate');
-        localStorage.removeItem('email');
       }
     };
 
@@ -141,8 +144,11 @@ function App() {
     // Verifica o status do registro encontrado
     const status = record.fields.Status;
     if (status === "Ativo" || status === "Ativa") {
+      await login(email)
+      setIsSendMail(true);
+
       // Verifica se o email existe no Firebase
-      const firebaseUser = await fetchFirebaseUser(email);
+      /*const firebaseUser = await fetchFirebaseUser(email);
       if (!firebaseUser) {
         // Se não existir, cria um novo usuário no Firebase
         const userCreated = await createFirebaseUser(email);
@@ -157,9 +163,9 @@ function App() {
       expiryDate.setDate(expiryDate.getDate() + 15);
 
       localStorage.setItem('expiryDate', expiryDate.toISOString());
-      localStorage.setItem('email', email);
       setIsLoading(false);
-      navigate.push(`/dashboard`);
+      navigate.push(`/dashboard`);*/
+
     } else if (status === "Cancelado" || status === "Cancelada") {
       setIsLoading(false);
       setErrorMessage(
@@ -221,36 +227,47 @@ function App() {
         <div className="mb-8 text-center">
           <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-48 mx-auto" />
         </div>
-        <div className="w-[90%] md:w-[60%] rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] p-[1px]">
-          <div className="flex flex-col h-full w-full p-8 bg-[#0B060F]  rounded-md">
 
-            {/* Título */}
-            <h2 className="titleForm text-xl md:text-2xl font-bold text-white mb-10">Faça seu login</h2>
-            {/* Formulário de login */}
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <input
-                  type="email"
-                  id="email"
-                  placeholder='Seu email'
-                  name="email"
-                  value={email}  // Valor do campo de e-mail
-                  onChange={handleEmailChange}  // Função para lidar com a mudança no campo de e-mail
-                  className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
-                />
+
+        {
+          isSendMail
+            ?
+            <div className="w-[90%] md:w-[60%] rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] p-[1px]">
+              <div className="flex flex-col h-full w-full p-8 bg-[#0B060F]  rounded-md">
+                <h2 className="titleForm text-xl md:text-2xl font-bold text-white">Verifique seu email para acessar.</h2>
               </div>
-              {/* Exibe a mensagem de erro em vermelho */}
-              {errorMessage && <p className="text-red-500 text-sm mb-2 formsText">{errorMessage}</p>}
-              <button
-                type="submit"
-                className="w-full py-2 text-white font-semibold rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center"
-                disabled={isLoading}
-              >
-                {isLoading ? "Carregando..." : <p className='formsText'>ACESSAR</p>}
-              </button>
-            </form>
-          </div>
-        </div>
+            </div>
+            :
+            <div className="w-[90%] md:w-[60%] rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] p-[1px]">
+              <div className="flex flex-col h-full w-full p-8 bg-[#0B060F]  rounded-md">
+                {/* Título */}
+                <h2 className="titleForm text-xl md:text-2xl font-bold text-white mb-10">Faça seu login</h2>
+                {/* Formulário de login */}
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder='Seu email'
+                      name="email"
+                      value={email}  // Valor do campo de e-mail
+                      onChange={handleEmailChange}  // Função para lidar com a mudança no campo de e-mail
+                      className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  {/* Exibe a mensagem de erro em vermelho */}
+                  {errorMessage && <p className="text-red-500 text-sm mb-2 formsText">{errorMessage}</p>}
+                  <button
+                    type="submit"
+                    className="w-full py-2 text-white font-semibold rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Carregando..." : <p className='formsText'>ACESSAR</p>}
+                  </button>
+                </form>
+              </div>
+            </div>
+        }
       </div>
     </div>
   );

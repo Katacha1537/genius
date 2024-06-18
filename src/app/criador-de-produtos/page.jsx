@@ -26,7 +26,6 @@ export default function Criador() {
             const threshold = 160; // Defina um limiar de altura ou largura que você considera indicativo de DevTools abertas
             if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
                 localStorage.removeItem('expiryDate')
-                localStorage.removeItem('email')
                 navigate.push('/'); // Redireciona para a página inicial ou qualquer outra página
             }
         };
