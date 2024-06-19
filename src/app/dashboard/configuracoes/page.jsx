@@ -49,7 +49,7 @@ const Configuracoes = () => {
         const detectDevToolsOpen = () => {
             const threshold = 160;
             if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
-                localStorage.removeItem('expiryDate');
+                localStorage.removeItem('sessionValidityPeriod');
                 localStorage.removeItem('email');
                 navigate.push('/');
             }
@@ -57,12 +57,12 @@ const Configuracoes = () => {
 
         window.addEventListener('resize', detectDevToolsOpen);
 
-        const expiryDate = localStorage.getItem('expiryDate');
+        const expiryDate = localStorage.getItem('sessionValidityPeriod');
         if (expiryDate) {
             const currentDate = new Date();
             const expirationDate = new Date(expiryDate);
             if (currentDate > expirationDate) {
-                localStorage.removeItem('expiryDate');
+                localStorage.removeItem('sessionValidityPeriod');
                 localStorage.removeItem('email');
                 navigate.push('/');
             }

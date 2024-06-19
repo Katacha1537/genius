@@ -43,7 +43,6 @@ export const useLogin = () => {
       })
 
       if (emailSend) {
-        console.log('Email enviado com sucesso!');
         setIsPending(false);
         setError(null);
       } else {
@@ -99,8 +98,8 @@ export const useLogin = () => {
       if (user && user.authKey === authKey) {
         console.log('key autenticada')
         const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 15);
-        localStorage.setItem('expiryDate', expiryDate.toISOString());
+        expiryDate.setDate(expiryDate.getDate() + 2);
+        localStorage.setItem('sessionValidityPeriod', expiryDate.toISOString());
         localStorage.removeItem('emailForSignIn')
 
         removeAuthKey(email)

@@ -21,7 +21,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isClient, setIsClient] = useState(false);
 
-  const { login, error, isPending } = useLogin()
+  const { login } = useLogin()
 
   useEffect(() => {
     setIsClient(true);
@@ -44,13 +44,13 @@ function App() {
     const detectDevToolsOpen = () => {
       const threshold = 160; // Defina um limiar de altura ou largura que você considera indicativo de DevTools abertas
       if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
-        localStorage.removeItem('expiryDate');
+        localStorage.removeItem('sessionValidityPeriod');
       }
     };
 
     window.addEventListener('resize', detectDevToolsOpen);
 
-    const expiryDate = localStorage.getItem('expiryDate');
+    const expiryDate = localStorage.getItem('sessionValidityPeriod');
 
     if (expiryDate) {
       const currentDate = new Date();
@@ -59,7 +59,7 @@ function App() {
       // Verifica se a data atual é maior que a data de expiração
       if (currentDate > expirationDate) {
         // Limpa o localStorage se o token expirou
-        localStorage.removeItem('expiryDate');
+        localStorage.removeItem('sessionValidityPeriod');
         localStorage.removeItem('email');
         // Opcional: Você pode redirecionar ou atualizar a interface de usuário aqui se necessário
       } else {
@@ -95,30 +95,6 @@ function App() {
     }
   };
 
-  const fetchFirebaseUser = async (email) => {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', email));
-      if (userDoc.exists()) {
-        return userDoc.data();
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error('Erro ao buscar o usuário no Firebase:', error);
-      return null;
-    }
-  };
-
-  const createFirebaseUser = async (email) => {
-    try {
-      await setDoc(doc(db, 'users', email), { email });
-      return true;
-    } catch (error) {
-      console.error('Erro ao criar usuário no Firebase:', error);
-      return false;
-    }
-  };
-
   // Função para lidar com o envio do formulário
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -146,25 +122,6 @@ function App() {
     if (status === "Ativo" || status === "Ativa") {
       await login(email)
       setIsSendMail(true);
-
-      // Verifica se o email existe no Firebase
-      /*const firebaseUser = await fetchFirebaseUser(email);
-      if (!firebaseUser) {
-        // Se não existir, cria um novo usuário no Firebase
-        const userCreated = await createFirebaseUser(email);
-        if (!userCreated) {
-          setErrorMessage('Erro ao criar usuário no banco de dados.');
-          setIsLoading(false);
-          return;
-        }
-      }
-
-      const expiryDate = new Date();
-      expiryDate.setDate(expiryDate.getDate() + 15);
-
-      localStorage.setItem('expiryDate', expiryDate.toISOString());
-      setIsLoading(false);
-      navigate.push(`/dashboard`);*/
 
     } else if (status === "Cancelado" || status === "Cancelada") {
       setIsLoading(false);

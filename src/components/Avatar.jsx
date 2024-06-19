@@ -63,7 +63,7 @@ const Avatar = ({ name }) => {
     };
 
     const onClickExit = () => {
-        localStorage.removeItem('expiryDate');
+        localStorage.removeItem('sessionValidityPeriod');
         localStorage.removeItem('email');
         localStorage.removeItem('userData');
         router.push('/');

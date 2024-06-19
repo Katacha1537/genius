@@ -25,7 +25,7 @@ export default function Mentoria() {
         const detectDevToolsOpen = () => {
             const threshold = 160; // Defina um limiar de altura ou largura que você considera indicativo de DevTools abertas
             if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
-                localStorage.removeItem('expiryDate')
+                localStorage.removeItem('sessionValidityPeriod')
                 localStorage.removeItem('email')
                 navigate.push('/'); // Redireciona para a página inicial ou qualquer outra página
             }
@@ -34,12 +34,12 @@ export default function Mentoria() {
         window.addEventListener('resize', detectDevToolsOpen);
 
         // Verifica a expiração do token
-        const expiryDate = localStorage.getItem('expiryDate');
+        const expiryDate = localStorage.getItem('sessionValidityPeriod');
         if (expiryDate) {
             const currentDate = new Date();
             const expirationDate = new Date(expiryDate);
             if (currentDate > expirationDate) {
-                localStorage.removeItem('expiryDate');
+                localStorage.removeItem('sessionValidityPeriod');
                 localStorage.removeItem('email');
                 navigate.push('/');
             }
