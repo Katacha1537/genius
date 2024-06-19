@@ -40,7 +40,7 @@ export default async (req, res) => {
                         .button {\n
                               display: inline-block;\n
                               padding: 10px 20px;\n
-                              font-size: 16px;\n      color: white;\n
+                              font-size: 16px;\n      color: #007BFF;\n
                               background-color: transparent;\n
                               text-decoration: none;\n
                               border: none;\n
@@ -54,7 +54,7 @@ export default async (req, res) => {
                 <p>Recebemos uma solicitação de login na Genius.</p>\n
                 <p>Se você quiser fazer login com a conta <strong>${email}</strong>, clique no botão abaixo:</p>\n
                  <p>\n
-                    <a href=\"https://login.geniusecom.io/finishSignUp/${authKey}\" class=\"button\">Entrar na Genius</a>\n
+                    <a href=\"https://login.geniusecom.io/finishSignUp/${authKey}/${email}\" class=\"button\">Entrar na Genius</a>\n
                 </p>\n
                 <p>Caso não tenha solicitado esse link, ignore este e-mail.</p>\n
                 <p>Obrigado,</p>\n

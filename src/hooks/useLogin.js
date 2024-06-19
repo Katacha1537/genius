@@ -88,15 +88,9 @@ export const useLogin = () => {
   const completeLogin = async (authKey, email) => {
     setError(null);
     setIsPending(true);
-    console.log('entrou: ', authKey)
     try {
-      console.log('verificou o email')
       const user = await fetchFirebaseUser(email);
-      console.log('buscou o usuario')
-      console.log(user)
-      console.log(authKey)
       if (user && user.authKey === authKey) {
-        console.log('key autenticada')
         const expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 2);
         localStorage.setItem('sessionValidityPeriod', expiryDate.toISOString());
@@ -107,10 +101,18 @@ export const useLogin = () => {
         setIsPending(false);
         setError(null);
 
-        return '/dashboard'
+        return {
+          pathReturn: '/dashboard',
+          messageReturn: 'Token Aprovado',
+          typeMessage: 'success'
+        }
       } else {
         console.error('Chave de autenticação inválida');
-        return '/'
+        return {
+          pathReturn: '/',
+          messageReturn: 'Token Inválido',
+          typeMessage: 'error'
+        }
       }
     } catch (err) {
       if (!isCancelled.current) {
