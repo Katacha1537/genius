@@ -92,7 +92,7 @@ export const useLogin = () => {
       const user = await fetchFirebaseUser(email);
       if (user && user.authKey === authKey) {
         const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 2);
+        expiryDate.setDate(expiryDate.getDate() + 1);
         localStorage.setItem('sessionValidityPeriod', expiryDate.toISOString());
         localStorage.removeItem('emailForSignIn')
 
