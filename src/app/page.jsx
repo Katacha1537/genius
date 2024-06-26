@@ -78,7 +78,10 @@ function App() {
 
   const fetchEmailRecord = async (email) => {
     try {
-      const formula = `{Email}='${email}'`;
+      // Convert the email to lower case
+      const lowerCaseEmail = email.toLowerCase();
+      // Create a formula that converts both sides of the comparison to lower case
+      const formula = `LOWER({Email})='${lowerCaseEmail}'`;
       const response = await airtableAPI.get(`tblJ0TsIBkSfImODQ?filterByFormula=${encodeURIComponent(formula)}`);
       const records = response.data.records;
 
@@ -94,6 +97,7 @@ function App() {
       return null;
     }
   };
+
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (event) => {
