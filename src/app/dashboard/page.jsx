@@ -7,7 +7,6 @@ import Header from "../../components/Header";
 
 import Carousel from "@/components/Carousel";
 import CriadorProdutosEcom from "@/components/criadorProdutosEcom copy";
-import Link from "next/link";
 import './page.css';
 
 const Dashboard = () => {
@@ -142,19 +141,16 @@ const Dashboard = () => {
         />,
     ]
     const itemsMentoria = [
-        <Link href='/mentoria' prefetch={false}>
-            <div
-                className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-cover bg-center h-[230px] w-[135px] md:h-[450px] md:w-[248px]"
-                style={{ backgroundImage: "url('/assets/mentoriaEcom.webp')", backgroundSize: 'cover' }}
-            />
-        </Link>,
-        <Link href='/dashboard/experts' prefetch={false}>
-            <div
-                className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-cover bg-center h-[230px] w-[135px] md:h-[450px] md:w-[248px]"
-                style={{ backgroundImage: "url('/assets/expertEcom.webp')", backgroundSize: 'cover' }}
-            />
-        </Link>
-        ,
+        <div
+            onClick={() => { navigate.push('/mentoria') }}
+            className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-cover bg-center h-[230px] w-[135px] md:h-[450px] md:w-[248px]"
+            style={{ backgroundImage: "url('/assets/mentoriaEcom.webp')", backgroundSize: 'cover' }}
+        />,
+        <div
+            onClick={() => { navigate.push('/dashboard/experts') }}
+            className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-cover bg-center h-[230px] w-[135px] md:h-[450px] md:w-[248px]"
+            style={{ backgroundImage: "url('/assets/expertEcom.webp')", backgroundSize: 'cover' }}
+        />,
         <span className="hidden"></span>
     ];
 
