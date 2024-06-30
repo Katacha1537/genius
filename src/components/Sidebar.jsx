@@ -1,11 +1,11 @@
 'use client'
-import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { PiHouseLine } from "react-icons/pi"
-import { IoSettingsOutline } from "react-icons/io5";
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/firebase/config';
 import { useUserContext } from '@/contexts/UserContext';
+import { db } from '@/firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { IoSettingsOutline } from "react-icons/io5";
+import { PiHouseLine } from "react-icons/pi";
 
 export default function Sidebar() {
     const pathname = usePathname();
@@ -62,11 +62,11 @@ export default function Sidebar() {
     const backgroundColor = emailStorage ? getColor(emailStorage.charAt(0)) : 'bg-gray-300';
 
     return (
-        <div className="bg-[#0B060F] hidden md:block fixed h-screen w-64 min-w-64 flex flex-col justify-between border-r border-[#382f3f]">
+        <div className="bg-[#110E0F] hidden md:block fixed h-screen w-64 min-w-64 flex flex-col justify-between border-r border-[#382f3f]">
             {rerender && <span className="hidden"></span>}
             <div className='w-full flex justify-center items-center mt-5'>
                 <a href="/dashboard" className="sidebar-link">
-                    <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-32 sm:w-40 mb-0 block" />
+                    <img src="https://i.postimg.cc/NMPbb670/Logo-light.png" alt="Logo" className="w-32 sm:w-40 mb-0 block" />
                 </a>
             </div>
             {/* Perfil do usuário */}
@@ -74,7 +74,7 @@ export default function Sidebar() {
                 <img
                     src={`${userImage}${backgroundColor}/FFFFFF?text=${initials}`}
                     alt={initials}
-                    className="rounded-full ring-purple-500 w-24 h-24 mx-auto mb-2 ring-2 cursor-pointer"
+                    className="rounded-full ring-[#C4F400] w-24 h-24 mx-auto mb-2 ring-2 cursor-pointer"
                 />
                 <p className="text-white text-sm text-center font-bold">{userName} {userLastName}</p>
             </div>
@@ -84,7 +84,7 @@ export default function Sidebar() {
                 {/* Links de navegação */}
                 <a href="/dashboard" className="sidebar-link">
                     <p
-                        className={`${isDashboard ? 'border-l-4 border-purple-500 bg-[#382f3f] text-purple-500' : 'border-t border-[#382f3f] text-white'} flex items-center gap-3 px-4 py-4 hover:text-white hover:bg-purple-500 hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
+                        className={`${isDashboard ? 'border-l-4 border-[#C4F400] bg-[#3b3f2f] text-[#C4F400]' : 'border-t border-[#3b3f2f] text-white'} flex items-center gap-3 px-4 py-4 hover:text-white hover:bg-[#C4F400] hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
                     >
                         <PiHouseLine />
                         Início
@@ -92,7 +92,7 @@ export default function Sidebar() {
                 </a>
                 <a href="/dashboard/configuracoes" className="sidebar-link">
                     <p
-                        className={`${isSettings ? 'border-l-4 border-purple-500 bg-[#382f3f] text-purple-500' : 'border-t border-b border-[#382f3f] text-white'} flex items-center gap-3 px-4 py-4 hover:text-white hover:bg-purple-500 hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
+                        className={`${isSettings ? 'border-l-4 border-[#C4F400] bg-[#3b3f2f] text-[#C4F400]' : 'border-t border-b border-[#3b3f2f] text-white'} flex items-center gap-3 px-4 py-4 hover:text-white hover:bg-[#C4F400] hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
                     >
                         <IoSettingsOutline />
                         Configurações

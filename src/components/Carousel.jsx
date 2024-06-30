@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Carousel = ({ items, title }) => {
@@ -9,8 +9,8 @@ const Carousel = ({ items, title }) => {
     const carouselRef = useRef(null);
     const [itemsToShow, setItemsToShow] = useState(4);
 
-    const itemWidth = window.innerWidth >= 768 ? 248 : 150;
-    const itemHeight = window.innerWidth >= 768 ? null : 250;
+    const itemWidth = window.innerWidth >= 768 ? 248 : 135;
+    const itemHeight = window.innerWidth >= 768 ? null : 240;
     const itemSpacing = 16;
 
     const updateItemsToShow = () => {
@@ -37,6 +37,8 @@ const Carousel = ({ items, title }) => {
     const handleDragStart = (clientX) => {
         setDragging(true);
         setDragStartX(clientX);
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
     };
 
     const handleDragMove = (clientX) => {
@@ -47,17 +49,32 @@ const Carousel = ({ items, title }) => {
     };
 
     const handleDragEnd = () => {
-        setDragging(false);
+        if (dragging) {
+            setDragging(false);
 
-        const totalItemWidth = itemWidth + itemSpacing;
-        const itemsDragged = dragOffset / totalItemWidth;
-        const newCurrentIndex = Math.round(currentIndex - itemsDragged);
+            const totalItemWidth = itemWidth + itemSpacing;
+            const itemsDragged = dragOffset / totalItemWidth;
+            const newCurrentIndex = Math.round(currentIndex - itemsDragged);
 
-        const maxIndex = Math.max(0, items.length - itemsToShow);
-        const clampedIndex = Math.min(Math.max(newCurrentIndex, 0), maxIndex);
+            const maxIndex = Math.max(0, items.length - itemsToShow);
+            const clampedIndex = Math.min(Math.max(newCurrentIndex, 0), maxIndex);
 
-        setCurrentIndex(clampedIndex);
-        setDragOffset(0);
+            setCurrentIndex(clampedIndex);
+            setDragOffset(0);
+
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+        }
+    };
+
+    const handleMouseMove = (e) => {
+        if (dragging) {
+            handleDragMove(e.clientX);
+        }
+    };
+
+    const handleMouseUp = () => {
+        handleDragEnd();
     };
 
     const handleTouchStart = (e) => {
@@ -80,7 +97,7 @@ const Carousel = ({ items, title }) => {
             <h3 className="text-lg text-white font-bold text-left">
                 {parts.length === 1 ? `${parts[0]}` : (
                     <div>
-                        {parts[0]} <span className="text-purple-500">(Em Breve)</span>
+                        {parts[0]} <span className="text-[#C4F400]">(Em Breve)</span>
                     </div>
                 )}
             </h3>
@@ -95,9 +112,9 @@ const Carousel = ({ items, title }) => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             onMouseDown={(e) => handleDragStart(e.clientX)}
-            onMouseMove={(e) => dragging && handleDragMove(e.clientX)}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
+            onMouseMove={(e) => dragging && handleMouseMove(e)}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
         >
             {renderTitleWithEmphasis(title)}
             <div

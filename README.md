@@ -1,6 +1,6 @@
 # Genius Platform
 
-![Genius Logo](https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg)
+![Genius Logo](https://i.postimg.cc/NMPbb670/Logo-light.png)
 
 ## Sobre o Projeto
 

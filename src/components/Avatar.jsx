@@ -1,9 +1,9 @@
+import { useUserContext } from '@/contexts/UserContext';
+import { db } from '@/firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/firebase/config';
-import { useUserContext } from '@/contexts/UserContext';
+import { useEffect, useState } from 'react';
 
 const Avatar = ({ name }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -96,7 +96,7 @@ const Avatar = ({ name }) => {
                 <img
                     src={`${userImage}${backgroundColor}/FFFFFF?text=${initials}`}
                     alt={userName}
-                    className={`h-10 w-10 rounded-full border-2 border-white ${backgroundColor}`}
+                    className={`h-10 w-10 rounded-full border-2 border-[#C4F400] ${backgroundColor}`}
                 />
             </div>
             {dropdownVisible && (

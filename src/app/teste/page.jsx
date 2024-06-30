@@ -1,8 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation';
-import React from 'react';
-import { PiHouseLine } from "react-icons/pi"
 import { IoSettingsOutline } from "react-icons/io5";
+import { PiHouseLine } from "react-icons/pi";
 
 export default function Sidebar() {
     const pathname = usePathname();
@@ -10,16 +9,16 @@ export default function Sidebar() {
     const isSettings = pathname === '/settings';
 
     return (
-        <div className="bg-[#0B060F] h-screen w-64 flex flex-col">
+        <div className="bg-[#110E0F] h-screen w-64 flex flex-col">
             <div className='w-full flex justify-center items-center mt-5'>
-                <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-32 sm:w-40 mb-0 block" />
+                <img src="https://i.postimg.cc/NMPbb670/Logo-light.png" alt="Logo" className="w-32 sm:w-40 mb-0 block" />
             </div>
             {/* Perfil do usuário */}
             <div className="p-4 mt-5">
                 <img
                     src="https://avatars.githubusercontent.com/u/48217381?v=4"
                     alt="Lucas Katacha"
-                    className="rounded-full border-2 border-purple-500 w-32 h-32 mx-auto mb-2"
+                    className="rounded-full border-2 border-[#C4F400] w-32 h-32 mx-auto mb-2"
                 />
                 <p className="text-white text-center font-bold">Lucas Katacha</p>
             </div>
@@ -29,7 +28,7 @@ export default function Sidebar() {
                 {/* Links de navegação */}
                 <a href="/" className="sidebar-link">
                     <p
-                        className={`${isDashboard ? 'border-l-4 border-purple-500 bg-[#382f3f] text-purple-500' : 'border-t border-[#382f3f] text-white'} flex items-center gap-3  px-4 py-4   hover:text-white hover:bg-purple-500 hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
+                        className={`${isDashboard ? 'border-l-4 border-[#C4F400] bg-[#382f3f] text-[#C4F400]' : 'border-t border-[#382f3f] text-white'} flex items-center gap-3  px-4 py-4   hover:text-white hover:bg-[#C4F400] hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
                     >
                         <PiHouseLine />
                         Início
@@ -37,7 +36,7 @@ export default function Sidebar() {
                 </a>
                 <a href="/configuracoes" className="sidebar-link">
                     <p
-                        className={`${isSettings ? 'border-l-4 border-purple-500 bg-[#382f3f] text-purple-500' : 'border-t border-[#382f3f] text-white'} flex items-center gap-3  px-4 py-4   hover:text-white hover:bg-purple-500 hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
+                        className={`${isSettings ? 'border-l-4 border-[#C4F400] bg-[#382f3f] text-[#C4F400]' : 'border-t border-[#382f3f] text-white'} flex items-center gap-3  px-4 py-4   hover:text-white hover:bg-[#C4F400] hover:bg-opacity-20 cursor-pointer transition-colors duration-300`}
                     >
                         <IoSettingsOutline />
                         Configurações

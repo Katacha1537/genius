@@ -1,9 +1,9 @@
 // pages/finishSignUp.js
 'use client'
-import { useEffect, useState } from 'react';
+import ToastManager from '@/components/ToastManager';
 import { useLogin } from '@/hooks/useLogin'; // Certifique-se de que o caminho para useLogin está correto
 import { useRouter } from 'next/navigation';
-import ToastManager from '@/components/ToastManager';
+import { useEffect, useState } from 'react';
 
 export default function FinishSignUp({ params }) {
     const { completeLogin } = useLogin();
@@ -59,7 +59,7 @@ export default function FinishSignUp({ params }) {
     }, [email]);
 
     return (
-        <div className="bg-[#0B060F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center">
+        <div className="bg-[#110E0F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center">
             {emailNotFound ? (
                 <form onSubmit={handleEmailSubmit}>
                     <p>Email não encontrado. Por favor, insira seu email:</p>
@@ -70,7 +70,7 @@ export default function FinishSignUp({ params }) {
                         className="text-black"
                         required
                     />
-                    <button type="submit" className="bg-purple-500 text-white px-4 py-2 mt-2">
+                    <button type="submit" className="bg-[#C4F400] text-white px-4 py-2 mt-2">
                         Enviar
                     </button>
                 </form>

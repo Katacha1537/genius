@@ -8,7 +8,10 @@ const CriadorProdutosEcom = () => {
             </h3>
             <div className="flex justify-start ">
                 <Link href="/criador-de-produtos">
-                    <div className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-[url('/assets/criadorEcom.webp')] bg-cover h-[240px] w-[150px] md:h-[400px] md:w-[248px]" />
+                    <div
+                        className="mt-2 hover:cursor-pointer rounded-xl mb-2 bg-cover bg-center h-[236px] w-[135px] md:h-[450px] md:w-[248px]"
+                        style={{ backgroundImage: "url('/assets/criadorEcom.webp')", backgroundSize: 'contain' }}
+                    />
                 </Link>
                 <div className="mt-2 hidden md:block rounded-xl  bg-cover h-[600px] md:h-[400px] w-[350px]" />
             </div>

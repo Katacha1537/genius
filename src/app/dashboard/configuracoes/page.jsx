@@ -1,16 +1,16 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useFirestore } from '../../../hooks/useFirestore';
-import Header from '../../../components/Header';
 import Sidebar from '@/components/Sidebar';
-import { doc, getDoc } from 'firebase/firestore';
+import { useUserContext } from '@/contexts/UserContext';
 import { db } from '@/firebase/config';
 import uploadToStorage from '@/hooks/uploadToStorage'; // Importando o hook de upload
-import { useUserContext } from '@/contexts/UserContext';
+import { doc, getDoc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Header from '../../../components/Header';
+import { useFirestore } from '../../../hooks/useFirestore';
 
-import './page.css'
+import './page.css';
 
 const Configuracoes = () => {
     const navigate = useRouter();
@@ -163,9 +163,9 @@ const Configuracoes = () => {
     };
 
     return !isClient
-        ? <h1 className='bg-[#0B060F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>
+        ? <h1 className='bg-[#110E0F] w-full h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>
         : (
-            <div className="bg-[#0B060F] flex h-screen pb-10 sm:pb-0 container-overflow">
+            <div className="bg-[#110E0F] flex h-screen pb-10 sm:pb-0 container-overflow">
                 <Sidebar />
                 <div className="w-full ml-0 md:ml-[255px]">
                     <div>
@@ -186,7 +186,7 @@ const Configuracoes = () => {
                                     <img
                                         src={`${imageSrc}${backgroundColor}/FFFFFF?text=${initials}`}
                                         alt="Lucas Katacha"
-                                        className="rounded-full ring-purple-500 w-16 h-16 mb-2 ring-2 cursor-pointer"
+                                        className="rounded-full ring-[#C4F400] w-16 h-16 mb-2 ring-2 cursor-pointer"
                                         onClick={() => document.getElementById('imageUpload').click()}
                                     />
                             }
@@ -197,7 +197,7 @@ const Configuracoes = () => {
                                     <p className="text-white">Nome:</p>
                                     <input
                                         type="text"
-                                        className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
+                                        className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-[#C4F400] rounded-sm text-white focus:outline-none focus:border-blue-500"
                                         value={nome}
                                         onChange={(e) => setNome(e.target.value)}
                                     />
@@ -206,7 +206,7 @@ const Configuracoes = () => {
                                     <p className="text-white">Sobrenome:</p>
                                     <input
                                         type="text"
-                                        className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
+                                        className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-[#C4F400] rounded-sm text-white focus:outline-none focus:border-blue-500"
                                         value={sobrenome}
                                         onChange={(e) => setSobrenome(e.target.value)}
                                     />
@@ -217,12 +217,12 @@ const Configuracoes = () => {
                                         value={email}
                                         disabled
                                         type="text"
-                                        className="formsText hover:cursor-not-allowed w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
+                                        className="formsText hover:cursor-not-allowed w-full px-4 py-2 bg-white bg-opacity-10 border border-[#C4F400] rounded-sm text-white focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full py-2 text-white font-semibold rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center"
+                                    className="w-full py-2 text-white font-semibold rounded-md bg-gradient-to-tr from-[#374500] to-[#C4F400] focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center"
                                 >
                                     {
                                         loading ? 'CARREGANDO...' : 'SALVAR'

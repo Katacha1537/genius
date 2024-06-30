@@ -1,15 +1,12 @@
 'use client'
-import React, { useEffect, useState } from 'react';
-import { airtableAPI } from '../service/airtableAPI';
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import './page.css';
-import { useRouter } from 'next/navigation';
-import { useDocument } from '../hooks/useDocument';
-import { db } from '../firebase/config';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { useLogin } from '@/hooks/useLogin';
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { airtableAPI } from '../service/airtableAPI';
+import './page.css';
 
 function App() {
   const navigate = useRouter();
@@ -170,37 +167,33 @@ function App() {
     }
   };
 
-  if (!isClient) return <h1 className='bg-[#0B060F] w-screen h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>;
+  if (!isClient) return <h1 className='bg-[#110E0F] w-screen h-screen text-white font-bold text-3xl titleForm text-center flex justify-center items-center'>Carregando...</h1>;
 
   return (
-    <div className="flex h-screen bg-[#0B060F]">
+    <div className="flex h-screen bg-[#110E0F]">
       <Analytics />
       <SpeedInsights />
       <WhatsAppButton />
       {/* Metade da tela vazia */}
-      <div className='hidden md:block md:w-1/2 h-full w-[50%] bg-gradient-to-t from-[#7d40f85b] via-[#E741E7] to-[#7d40f85b] pr-[2px]'>
-        <div className="bg-[url('/assets/BG.webp')] bg-cover bg-center h-full">
-        </div>
-      </div>
 
       {/* Metade da tela com bloco de login */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-[#0B060F] bg-gradient-to-r from-[#4100C85b] from-1% to-transparent to-35% ml-auto">
+      <div className="w-full flex flex-col justify-center items-center bg-[#110E0F] bg-gradient-to-r from-[#7bc8005b] from-1% to-transparent to-35% ml-auto">
         <div className="mb-8 text-center">
-          <img src="https://geniusecom.io/wp-content/uploads/2023/04/Logo-light.svg" alt="Logo" className="w-48 mx-auto" />
+          <img src="https://i.postimg.cc/NMPbb670/Logo-light.png" alt="Logo" className="w-48 mx-auto" />
         </div>
 
 
         {
           isSendMail
             ?
-            <div className="w-[90%] md:w-[60%] rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] p-[1px]">
-              <div className="flex flex-col h-full w-full p-8 bg-[#0B060F]  rounded-md">
+            <div className="w-[90%] md:w-[60%] rounded-md bg-gradient-to-tr from-[#374500] to-[#C4F400] p-[1px]">
+              <div className="flex flex-col h-full w-full p-8 bg-[#110E0F]  rounded-md">
                 <h2 className="titleForm text-xl md:text-2xl font-bold text-white">Verifique seu email para acessar.</h2>
               </div>
             </div>
             :
-            <div className="w-[90%] md:w-[60%] rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] p-[1px]">
-              <div className="flex flex-col h-full w-full p-8 bg-[#0B060F]  rounded-md">
+            <div className="w-[90%] md:w-[35%] rounded-md bg-gradient-to-tr from-[#374500] to-[#C4F400] p-[1px]">
+              <div className="flex flex-col h-full w-full p-8 bg-[#110E0F]  rounded-md">
                 {/* Título */}
                 <h2 className="titleForm text-xl md:text-2xl font-bold text-white mb-10">Faça seu login</h2>
                 {/* Formulário de login */}
@@ -213,14 +206,14 @@ function App() {
                       name="email"
                       value={email}  // Valor do campo de e-mail
                       onChange={handleEmailChange}  // Função para lidar com a mudança no campo de e-mail
-                      className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-purple-500 rounded-sm text-white focus:outline-none focus:border-blue-500"
+                      className="formsText w-full px-4 py-2 bg-white bg-opacity-10 border border-[#C4F400] rounded-sm text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   {/* Exibe a mensagem de erro em vermelho */}
                   {errorMessage && <p className="text-red-500 text-sm mb-2 formsText">{errorMessage}</p>}
                   <button
                     type="submit"
-                    className="w-full py-2 text-white font-semibold rounded-md bg-gradient-to-tr from-[#4100C8] to-[#E741E7] focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center"
+                    className="w-full py-2 text-white font-semibold rounded-md bg-gradient-to-tr from-[#374500] to-[#C4F400] focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center"
                     disabled={isLoading}
                   >
                     {isLoading ? "Carregando..." : <p className='formsText'>ACESSAR</p>}
