@@ -94,13 +94,29 @@ const Carousel = ({ items, title }) => {
     const renderTitleWithEmphasis = (title) => {
         const parts = title.split('(Em Breve)');
         return (
-            <h3 className="text-lg text-white font-bold text-left">
-                {parts.length === 1 ? `${parts[0]}` : (
-                    <div>
-                        {parts[0]} <span className="text-[#C4F400]">(Em Breve)</span>
-                    </div>
-                )}
-            </h3>
+            <div className='flex gap-2 items-center'>
+                <h3 className="text-lg text-white font-bold text-left">
+                    {parts.length === 1 ? `${parts[0]}` : (
+                        <div>
+                            {parts[0]} <span className="text-[#C4F400]">(Em Breve)</span>
+                        </div>
+                    )}
+                </h3>
+                <div className="md:flex md:gap-2 hidden">
+                    <button
+                        className="bg-[#83a00f] text-white p-2 rounded-full z-10"
+                        onClick={() => setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0))}
+                    >
+                        <FaChevronLeft size={10} />
+                    </button>
+                    <button
+                        className="bg-[#83a00f] text-white p-2 rounded-full z-10"
+                        onClick={() => setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, items.length - itemsToShow))}
+                    >
+                        <FaChevronRight size={10} />
+                    </button>
+                </div>
+            </div>
         );
     };
 
@@ -132,7 +148,7 @@ const Carousel = ({ items, title }) => {
             <div className="block md:hidden">
                 {currentIndex > 0 && (
                     <button
-                        className="absolute top-[58%] left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
+                        className="absolute top-[58%] left-0 transform -translate-y-1/2 bg-[#83a00f] text-white p-2 rounded-full z-10"
                         onClick={() => setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0))}
                     >
                         <FaChevronLeft />
@@ -140,7 +156,7 @@ const Carousel = ({ items, title }) => {
                 )}
                 {currentIndex < items.length - itemsToShow && (
                     <button
-                        className="absolute top-[58%] right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10"
+                        className="absolute top-[58%] right-0 transform -translate-y-1/2 bg-[#83a00f] text-white p-2 rounded-full z-10"
                         onClick={() => setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, items.length - itemsToShow))}
                     >
                         <FaChevronRight />
