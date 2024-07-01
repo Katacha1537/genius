@@ -25,8 +25,7 @@ export default async (req, res) => {
     }
 
     // Títulos e conteúdos possíveis
-    const titles = [
-      'Acesso da Genius!',
+    const titles = [,
       'Sua Porta de Entrada na Genius!',
       'Link de Acesso da Genius!',
       'Entre na Genius Agora!'
